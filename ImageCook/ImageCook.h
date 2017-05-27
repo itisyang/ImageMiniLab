@@ -10,6 +10,10 @@ class ImageCook : public QMainWindow
 public:
 	ImageCook(QWidget *parent = Q_NULLPTR);
 
+private slots:
+    void on_actionopen_triggered();
+	void on_actionclose_triggered();
+
 private:
 	Ui::ImageCookClass ui;
 };
