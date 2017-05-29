@@ -1,4 +1,6 @@
 <RCC>
-    <qresource prefix="ImageCook">
+    <qresource prefix="/qss">
+        <file>normal.qss</file>
     </qresource>
+    <qresource prefix="/res"/>
 </RCC>
