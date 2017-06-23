@@ -22,7 +22,8 @@ TEMPLATE = app
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += main.cpp \
-    ImageCook.cpp
+    ImageCook.cpp \
+    ShowLab.cpp
 
 RESOURCES += \
     ImageCook.qrc
@@ -31,4 +32,5 @@ FORMS += \
     ImageCook.ui
 
 HEADERS += \
-    ImageCook.h
+    ImageCook.h \
+    ShowLab.h

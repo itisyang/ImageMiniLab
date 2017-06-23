@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <QMainWindow>
 
@@ -17,6 +17,10 @@ private slots:
     void on_ActSave_triggered();
     void on_ActSaveAs_triggered();
     void on_ActRotate(QAction *act);
+    
+signals:
+    void Sig_BasePix(QPixmap pix);
+    void Sig_Rotate(int nDegrees);
 private:
 	Ui::ImageCookClass ui;
 

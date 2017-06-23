@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QAction>
 
+
 ImageCook::ImageCook(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -20,6 +21,9 @@ ImageCook::ImageCook(QWidget *parent)
     pRotateMenu->addAction(RotateLeft90);
     connect(pRotateMenu, SIGNAL(triggered(QAction*)), this, SLOT(on_ActRotate(QAction*)));
     ui.BtnRotate->setMenu(pRotateMenu);
+    
+    connect(this, SIGNAL(Sig_BasePix(QPixmap)), ui.LabShow, SLOT(On_SetBasePix(QPixmap)));
+    connect(this, SIGNAL(Sig_Rotate(int)), ui.LabShow, SLOT(On_SetRotate(int)));
 
     ui.LabShow->clear();
 }
@@ -33,7 +37,8 @@ void ImageCook::on_ActOpen_triggered()
     if (!m_ImagePath.isEmpty())
 	{
         m_Pix.load(m_ImagePath);
-        ui.LabShow->setPixmap(m_Pix);
+        emit Sig_BasePix(m_Pix);
+        //ui.LabShow->setPixmap(m_Pix);
 	}
 }
 
@@ -68,15 +73,13 @@ void ImageCook::on_ActSaveAs_triggered()
 
 void ImageCook::on_ActRotate(QAction *act)
 {
-    qDebug() << act->text();
     if (act->text() == "向左旋转90度")
     {
-        ui.LabShow->clear();
-
+        emit Sig_Rotate(90);
     }
     else if (act->text() == "向右旋转90度")
     {
-
+        emit Sig_Rotate(-90);
     }
 
 }
