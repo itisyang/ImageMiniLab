@@ -6,6 +6,8 @@
 #include <QMenu>
 #include <QContextMenuEvent>
 
+#include "define.h"
+
 class ShowWid : public QWidget
 {
     Q_OBJECT
@@ -16,6 +18,7 @@ public:
 
 public slots:
     void On_SetBasePix(QPixmap pix);
+    void On_Undo();
 
 private slots:
     void on_actSharpen_triggered();
@@ -44,7 +47,7 @@ private:
     QAction m_actRotateRight;//向右旋转
     QAction m_actRotateLeft;//向左旋转
 
-
+    QList<int> m_listStep; //操作步骤
 
 };
 

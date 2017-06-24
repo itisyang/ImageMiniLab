@@ -33,4 +33,5 @@ FORMS += \
 
 HEADERS += \
     ImageCook.h \
-    ShowWid.h
+    ShowWid.h \
+    define.h

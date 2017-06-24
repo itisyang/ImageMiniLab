@@ -16,10 +16,11 @@ private slots:
     void on_ActClose_triggered();
     void on_ActSave_triggered();
     void on_ActSaveAs_triggered();
-    
+    void on_ActUndo_triggered();
+
 signals:
     void Sig_BasePix(QPixmap pix);
-    void Sig_Rotate(int nDegrees);
+    void Sig_Undo();
 private:
 	Ui::ImageCookClass ui;
 

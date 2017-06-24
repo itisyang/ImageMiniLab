@@ -17,21 +17,9 @@ ImageCook::ImageCook(QWidget *parent)
         qDebug() << qss.readAll();
         qss.close();
     }
-
-    //旋转菜单
-//    QAction* RotateRight90 = new QAction(this);
-//    RotateRight90->setText("向右旋转90度");
-//    QAction* RotateLeft90 = new QAction(this);
-//    RotateLeft90->setText("向左旋转90度");
-//    QMenu *pRotateMenu = new QMenu();
-//    pRotateMenu->addAction(RotateRight90);
-//    pRotateMenu->addAction(RotateLeft90);
-//    connect(pRotateMenu, SIGNAL(triggered(QAction*)), this, SLOT(on_ActRotate(QAction*)));
-//    ui.BtnRotate->setMenu(pRotateMenu);
     
     connect(this, SIGNAL(Sig_BasePix(QPixmap)), ui.ShowWidget, SLOT(On_SetBasePix(QPixmap)));
-//    connect(this, SIGNAL(Sig_Rotate(int)), ui.ShowWidget, SLOT(On_SetRotate(int)));
-
+    connect(this, SIGNAL(Sig_Undo()), ui.ShowWidget, SLOT(On_Undo()));
 }
 
 void ImageCook::on_ActOpen_triggered()
@@ -88,3 +76,8 @@ void ImageCook::on_ActSaveAs_triggered()
 //    }
 //}
 
+
+void ImageCook::on_ActUndo_triggered()
+{
+    emit Sig_Undo();
+}

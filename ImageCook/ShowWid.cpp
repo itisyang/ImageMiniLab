@@ -10,6 +10,7 @@ ShowWid::ShowWid(QWidget *parent)
 {
     m_nRotateDegrees = 0;//初始旋转角度
     m_bGrayscale = false;
+    m_listStep.clear();
 
     m_actSharpen.setText("锐化");
     m_actDenoise.setText("去噪");
@@ -72,10 +73,12 @@ void ShowWid::contextMenuEvent(QContextMenuEvent *event)
     if (m_bGrayscale)
     {
         m_actGrayscale.setText("彩色化");
+        m_listStep.push_back(STEP_UNGRAYSCALE);
     }
     else
     {
         m_actGrayscale.setText("灰度化");
+        m_listStep.push_back(STEP_GRAYSCALE);
     }
     m_menuMouse.exec(QCursor::pos());
     event->accept();
@@ -87,15 +90,26 @@ void ShowWid::On_SetBasePix(QPixmap pix)
     m_pixShow = m_pixBase;
 }
 
+void ShowWid::On_Undo()
+{
+    qDebug() << "On_Undo";
+    if (m_listStep.isEmpty())
+    {
+        return;
+    }
+    m_listStep.pop_back();
+}
+
 
 void ShowWid::on_actSharpen_triggered()
 {
     qDebug() << "on_actSharpen_triggered";
+    m_listStep.push_back(STEP_SHARPE);
 }
 
 void ShowWid::on_actDenoise_triggered()
 {
-
+    m_listStep.push_back(STEP_DENOISE);
 }
 
 void ShowWid::on_actGrayscale_triggered()
@@ -126,10 +140,13 @@ void ShowWid::on_actGrayscale_triggered()
             delete newImage;
         }
 
+        m_listStep.push_back(STEP_GRAYSCALE);
+
     }
     else
     {
         m_pixShow = m_pixBase;
+        m_listStep.push_back(STEP_UNGRAYSCALE);
     }
 
     update();
@@ -144,6 +161,7 @@ void ShowWid::On_menuRotate_triggered(QAction *act)
         {
             m_nRotateDegrees = 0;
         }
+        m_listStep.push_back(STEP_ROTATE_RIGHT);
     }
     else if (act == &m_actRotateLeft)
     {
@@ -152,6 +170,7 @@ void ShowWid::On_menuRotate_triggered(QAction *act)
         {
             m_nRotateDegrees = 0;
         }
+        m_listStep.push_back(STEP_ROTATE_LEFT);
     }
 
     update();
