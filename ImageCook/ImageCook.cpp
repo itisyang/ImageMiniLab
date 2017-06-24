@@ -4,28 +4,34 @@
 #include <QDebug>
 #include <QPainter>
 #include <QAction>
-
+#include <QFile>
 
 ImageCook::ImageCook(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
 
-    //旋转菜单
-    QAction* RotateRight90 = new QAction(this);
-    RotateRight90->setText("向右旋转90度");
-    QAction* RotateLeft90 = new QAction(this);
-    RotateLeft90->setText("向左旋转90度");
-    QMenu *pRotateMenu = new QMenu();
-    pRotateMenu->addAction(RotateRight90);
-    pRotateMenu->addAction(RotateLeft90);
-    connect(pRotateMenu, SIGNAL(triggered(QAction*)), this, SLOT(on_ActRotate(QAction*)));
-    ui.BtnRotate->setMenu(pRotateMenu);
-    
-    connect(this, SIGNAL(Sig_BasePix(QPixmap)), ui.LabShow, SLOT(On_SetBasePix(QPixmap)));
-    connect(this, SIGNAL(Sig_Rotate(int)), ui.LabShow, SLOT(On_SetRotate(int)));
+    QFile qss(":/res/normal.qss");
+    if (qss.open(QIODevice::ReadOnly))
+    {
+        qDebug() << qss.readAll();
+        qss.close();
+    }
 
-    ui.LabShow->clear();
+    //旋转菜单
+//    QAction* RotateRight90 = new QAction(this);
+//    RotateRight90->setText("向右旋转90度");
+//    QAction* RotateLeft90 = new QAction(this);
+//    RotateLeft90->setText("向左旋转90度");
+//    QMenu *pRotateMenu = new QMenu();
+//    pRotateMenu->addAction(RotateRight90);
+//    pRotateMenu->addAction(RotateLeft90);
+//    connect(pRotateMenu, SIGNAL(triggered(QAction*)), this, SLOT(on_ActRotate(QAction*)));
+//    ui.BtnRotate->setMenu(pRotateMenu);
+    
+    connect(this, SIGNAL(Sig_BasePix(QPixmap)), ui.ShowWidget, SLOT(On_SetBasePix(QPixmap)));
+//    connect(this, SIGNAL(Sig_Rotate(int)), ui.ShowWidget, SLOT(On_SetRotate(int)));
+
 }
 
 void ImageCook::on_ActOpen_triggered()
@@ -45,7 +51,6 @@ void ImageCook::on_ActOpen_triggered()
 void ImageCook::on_ActClose_triggered()
 {
 	qDebug() << "on_actionclose_triggered";
-    ui.LabShow->clear();
     m_ImagePath.clear();
 }
 
@@ -71,16 +76,15 @@ void ImageCook::on_ActSaveAs_triggered()
     }
 }
 
-void ImageCook::on_ActRotate(QAction *act)
-{
-    if (act->text() == "向左旋转90度")
-    {
-        emit Sig_Rotate(90);
-    }
-    else if (act->text() == "向右旋转90度")
-    {
-        emit Sig_Rotate(-90);
-    }
-
-}
+//void ImageCook::on_ActRotate(QAction *act)
+//{
+//    if (act->text() == "向左旋转90度")
+//    {
+//        emit Sig_Rotate(90);
+//    }
+//    else if (act->text() == "向右旋转90度")
+//    {
+//        emit Sig_Rotate(-90);
+//    }
+//}
 

@@ -16,7 +16,6 @@ private slots:
     void on_ActClose_triggered();
     void on_ActSave_triggered();
     void on_ActSaveAs_triggered();
-    void on_ActRotate(QAction *act);
     
 signals:
     void Sig_BasePix(QPixmap pix);

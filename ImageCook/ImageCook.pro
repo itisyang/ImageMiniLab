@@ -23,7 +23,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     ImageCook.cpp \
-    ShowLab.cpp
+    ShowWid.cpp
 
 RESOURCES += \
     ImageCook.qrc
@@ -33,4 +33,4 @@ FORMS += \
 
 HEADERS += \
     ImageCook.h \
-    ShowLab.h
+    ShowWid.h
