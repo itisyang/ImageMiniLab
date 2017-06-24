@@ -38,7 +38,14 @@
     <addaction name="ActSave"/>
     <addaction name="ActSaveAs"/>
    </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>编辑</string>
+    </property>
+    <addaction name="ActUndo"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="StatusBar"/>
   <action name="ActOpen">
@@ -59,6 +66,11 @@
   <action name="ActSaveAs">
    <property name="text">
     <string>另存为</string>
+   </property>
+  </action>
+  <action name="ActUndo">
+   <property name="text">
+    <string>撤销</string>
    </property>
   </action>
  </widget>
