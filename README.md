@@ -3,16 +3,13 @@
 一个图像处理的工具，我将它命名为“水煮图片”。
 项目仅用于学习和交流。
 
-## todolist
--[ ] 色彩分布图
+## todo list
 
-
-# todo list
-:white_check_mark: 旋转
+:white_large_square: 旋转
 
 :white_medium_small_square: 镜像
 
-:white_check_mark: 灰度化
+:white_large_square: 灰度化
 
 :white_medium_small_square: 锐化
 
