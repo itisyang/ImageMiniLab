@@ -6,11 +6,13 @@
 
 #include "ShowWid.h"
 
+#pragma execution_character_set("utf-8")
+
 ShowWid::ShowWid(QWidget *parent)
 {
     m_nRotateDegrees = 0;//初始旋转角度
     m_bGrayscale = false;
-    m_listStep.clear();
+    m_listStepHistory.clear();
 
     m_actSharpen.setText("锐化");
     m_actDenoise.setText("去噪");
@@ -28,11 +30,10 @@ ShowWid::ShowWid(QWidget *parent)
     listMenuMouse << &m_actSharpen << &m_actDenoise << &m_actGrayscale << &m_actRotateMenu;
     m_menuMouse.addActions(listMenuMouse);
 
-    connect(&m_actSharpen, SIGNAL(triggered()), this, SLOT(on_actSharpen_triggered()));
-    connect(&m_actDenoise, SIGNAL(triggered()), this, SLOT(on_actDenoise_triggered()));
-    connect(&m_actGrayscale, SIGNAL(triggered()), this, SLOT(on_actGrayscale_triggered()));
-    connect(&m_menuRotate, SIGNAL(triggered(QAction*)), this, SLOT(On_menuRotate_triggered(QAction*)));
-
+    connect(&m_actSharpen, &QAction::triggered, this, ShowWid::on_actSharpen_triggered);
+    connect(&m_actDenoise, &QAction::triggered, this, ShowWid::on_actDenoise_triggered);
+    connect(&m_actGrayscale, &QAction::triggered, this, ShowWid::on_actGrayscale_triggered);
+    connect(&m_menuRotate, &QMenu::triggered, this, ShowWid::On_menuRotate_triggered);
 }
 
 ShowWid::~ShowWid()
@@ -40,6 +41,8 @@ ShowWid::~ShowWid()
 
 }
 
+
+//绘制事件
 void ShowWid::paintEvent(QPaintEvent *event)
 {
     QPainter painter;
@@ -67,51 +70,57 @@ void ShowWid::paintEvent(QPaintEvent *event)
     
 }
 
+
+//右键菜单
 void ShowWid::contextMenuEvent(QContextMenuEvent *event)
 {
     //鼠标右键菜单出现的位置为当前鼠标的位置
     if (m_bGrayscale)
     {
         m_actGrayscale.setText("彩色化");
-        m_listStep.push_back(STEP_UNGRAYSCALE);
+        m_listStepHistory.push_back(STEP_UNGRAYSCALE);
     }
     else
     {
         m_actGrayscale.setText("灰度化");
-        m_listStep.push_back(STEP_GRAYSCALE);
+        m_listStepHistory.push_back(STEP_GRAYSCALE);
     }
     m_menuMouse.exec(QCursor::pos());
     event->accept();
 }
 
+//原图
 void ShowWid::On_SetBasePix(QPixmap pix)
 {
     m_pixBase = pix;
     m_pixShow = m_pixBase;
 }
 
+//撤销
 void ShowWid::On_Undo()
 {
     qDebug() << "On_Undo";
-    if (m_listStep.isEmpty())
+    if (m_listStepHistory.isEmpty())
     {
         return;
     }
-    m_listStep.pop_back();
+    m_listStepHistory.pop_back();
 }
 
-
+//锐化
 void ShowWid::on_actSharpen_triggered()
 {
     qDebug() << "on_actSharpen_triggered";
-    m_listStep.push_back(STEP_SHARPE);
+    m_listStepHistory.push_back(STEP_SHARPE);
 }
 
+//去噪
 void ShowWid::on_actDenoise_triggered()
 {
-    m_listStep.push_back(STEP_DENOISE);
+    m_listStepHistory.push_back(STEP_DENOISE);
 }
 
+//灰度化
 void ShowWid::on_actGrayscale_triggered()
 {
     qDebug() << "on_actGrayscale_triggered";
@@ -131,6 +140,7 @@ void ShowWid::on_actGrayscale_triggered()
 
             for(int x = 0; x < newImage->width(); x++){
                 for(int y = 0; y < newImage->height(); y++){
+                    //对坐标像素点 红绿蓝 取平均值，三值相等即为灰度图
                     oldColor = QColor(img.pixel(x,y));
                     int average = (oldColor.red()+oldColor.green()+oldColor.blue())/3;
                     newImage->setPixel(x, y, qRgb(average,average,average));
@@ -140,18 +150,19 @@ void ShowWid::on_actGrayscale_triggered()
             delete newImage;
         }
 
-        m_listStep.push_back(STEP_GRAYSCALE);
+        m_listStepHistory.push_back(STEP_GRAYSCALE);
 
     }
     else
     {
         m_pixShow = m_pixBase;
-        m_listStep.push_back(STEP_UNGRAYSCALE);
+        m_listStepHistory.push_back(STEP_UNGRAYSCALE);
     }
 
     update();
 }
 
+//旋转
 void ShowWid::On_menuRotate_triggered(QAction *act)
 {
     if (act == &m_actRotateRight)
@@ -161,7 +172,7 @@ void ShowWid::On_menuRotate_triggered(QAction *act)
         {
             m_nRotateDegrees = 0;
         }
-        m_listStep.push_back(STEP_ROTATE_RIGHT);
+        m_listStepHistory.push_back(STEP_ROTATE_RIGHT);
     }
     else if (act == &m_actRotateLeft)
     {
@@ -170,7 +181,7 @@ void ShowWid::On_menuRotate_triggered(QAction *act)
         {
             m_nRotateDegrees = 0;
         }
-        m_listStep.push_back(STEP_ROTATE_LEFT);
+        m_listStepHistory.push_back(STEP_ROTATE_LEFT);
     }
 
     update();

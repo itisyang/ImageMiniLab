@@ -16,38 +16,37 @@ public:
     ShowWid(QWidget *parent = Q_NULLPTR);
     ~ShowWid();
 
-public slots:
-    void On_SetBasePix(QPixmap pix);
-    void On_Undo();
-
 private slots:
-    void on_actSharpen_triggered();
-    void on_actDenoise_triggered();
-    void on_actGrayscale_triggered();
-    void On_menuRotate_triggered(QAction *act);
+    void on_actSharpen_triggered();             //锐化
+    void on_actDenoise_triggered();             //去噪
+    void on_actGrayscale_triggered();           //灰度化
+    void On_menuRotate_triggered(QAction *act); //旋转
 
     //void on_actRotate(QAction *act);
+
+    void On_SetBasePix(QPixmap pix);            //原图
+    void On_Undo();                             //撤销
 private:
-    void paintEvent(QPaintEvent *event);
-    void contextMenuEvent(QContextMenuEvent *event);
+    void paintEvent(QPaintEvent *event);                //绘制事件
+    void contextMenuEvent(QContextMenuEvent *event);    //右键菜单
 
 private:
-    QPixmap m_pixBase;//原始图片
-    QPixmap m_pixShow;//显示效果图片
+    QPixmap m_pixBase;          //原始图像
+    QPixmap m_pixShow;          //效果显示图像
 
-    int m_nRotateDegrees;
-    bool m_bGrayscale;
+    int m_nRotateDegrees;       //旋转角度
+    bool m_bGrayscale;          //灰度标志
 
-    QMenu m_menuMouse;//鼠标右键菜单
-    QAction m_actSharpen;//锐化
-    QAction m_actDenoise;//去噪
-    QAction m_actGrayscale;//灰度化
-    QAction m_actRotateMenu;
-    QMenu m_menuRotate;//旋转
-    QAction m_actRotateRight;//向右旋转
-    QAction m_actRotateLeft;//向左旋转
+    QMenu m_menuMouse;          //鼠标右键菜单
+    QAction m_actSharpen;       //锐化
+    QAction m_actDenoise;       //去噪
+    QAction m_actGrayscale;     //灰度化
+    QAction m_actRotateMenu;    //旋转
+    QMenu m_menuRotate;         //旋转
+    QAction m_actRotateRight;   //向右旋转
+    QAction m_actRotateLeft;    //向左旋转
 
-    QList<int> m_listStep; //操作步骤
+    QList<int> m_listStepHistory;      //历史操作步骤
 
 };
 
