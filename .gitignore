@@ -1,0 +1,13 @@
+*.suo
+GeneratedFiles
+moc_*
+ui_*
+*.obj
+*.tlog
+*.pdb
+*.exe
+*.ilk
+*.user
+*.log
+Debug
+*.VC.db
