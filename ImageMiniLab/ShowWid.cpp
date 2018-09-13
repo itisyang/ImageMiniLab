@@ -30,10 +30,10 @@ ShowWid::ShowWid(QWidget *parent)
     listMenuMouse << &m_actSharpen << &m_actDenoise << &m_actGrayscale << &m_actRotateMenu;
     m_menuMouse.addActions(listMenuMouse);
 
-    connect(&m_actSharpen, &QAction::triggered, this, ShowWid::on_actSharpen_triggered);
-    connect(&m_actDenoise, &QAction::triggered, this, ShowWid::on_actDenoise_triggered);
-    connect(&m_actGrayscale, &QAction::triggered, this, ShowWid::on_actGrayscale_triggered);
-    connect(&m_menuRotate, &QMenu::triggered, this, ShowWid::On_menuRotate_triggered);
+    connect(&m_actSharpen, &QAction::triggered, this, &ShowWid::on_actSharpen_triggered);
+    connect(&m_actDenoise, &QAction::triggered, this, &ShowWid::on_actDenoise_triggered);
+    connect(&m_actGrayscale, &QAction::triggered, this, &ShowWid::on_actGrayscale_triggered);
+    connect(&m_menuRotate, &QMenu::triggered, this, &ShowWid::On_menuRotate_triggered);
 }
 
 ShowWid::~ShowWid()
