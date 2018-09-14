@@ -7,7 +7,6 @@
 #include <QContextMenuEvent>
 
 
-
 #define STEP_GRAYSCALE      1   //灰度化
 #define STEP_UNGRAYSCALE    2   //去灰度化
 #define STEP_DENOISE        3   //去噪
@@ -36,11 +35,18 @@ private slots:
     void On_Undo();                             //撤销
 private:
     void paintEvent(QPaintEvent *event);                //绘制事件
+
     void contextMenuEvent(QContextMenuEvent *event);    //右键菜单
 
+    void wheelEvent(QWheelEvent *e);    //滚轮事件
+    void mouseMoveEvent(QMouseEvent * e);//鼠标移动
+    void mousePressEvent(QMouseEvent * e);//鼠标点击
+    void mouseDoubleClickEvent(QMouseEvent *e);//鼠标双击
 private:
     QPixmap m_pixBase;          //原始图像
     QPixmap m_pixShow;          //效果显示图像
+
+    QImage m_stImage;
 
     int m_nRotateDegrees;       //旋转角度
     bool m_bGrayscale;          //灰度标志

@@ -89,6 +89,26 @@ void ShowWid::contextMenuEvent(QContextMenuEvent *event)
     event->accept();
 }
 
+void ShowWid::wheelEvent(QWheelEvent *e)
+{
+
+}
+
+void ShowWid::mouseMoveEvent(QMouseEvent * e)
+{
+
+}
+
+void ShowWid::mousePressEvent(QMouseEvent * e)
+{
+
+}
+
+void ShowWid::mouseDoubleClickEvent(QMouseEvent *e)
+{
+
+}
+
 //原图
 void ShowWid::On_SetBasePix(QPixmap pix)
 {
