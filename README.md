@@ -1,4 +1,4 @@
-# ImageCook
+# ImageMiniLab
 
 图像迷你实验室，可进行图像实验，图像处理。
 
@@ -29,6 +29,5 @@
 
 :white_large_square: 区域提取
 
-:white_large_square: 区域提取
 
 
