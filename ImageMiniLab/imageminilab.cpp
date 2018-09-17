@@ -79,5 +79,5 @@ void ImageMiniLab::on_ActSaveAs_triggered()
 
 void ImageMiniLab::on_ActUndo_triggered()
 {
-    emit Sig_Undo();
+    emit SigUndo();
 }

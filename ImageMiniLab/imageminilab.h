@@ -19,8 +19,7 @@ private slots:
     void on_ActSaveAs_triggered();
     void on_ActUndo_triggered();
 signals:
-    void Sig_BasePix(QPixmap pix);
-    void Sig_Undo();
+    void SigUndo();
     void SigOpenImage(QString strImagePath);
 private:
     Ui::ImageMiniLabClass ui;
