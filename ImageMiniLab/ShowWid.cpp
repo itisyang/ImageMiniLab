@@ -10,6 +10,7 @@
 
 ShowWid::ShowWid(QWidget *parent): m_fScale(1), xtranslate(0), ytranslate(0)
 {
+
     m_nRotateDegrees = 0;//初始旋转角度
     m_bGrayscale = false;
     m_listStepHistory.clear();
@@ -94,14 +95,22 @@ void ShowWid::contextMenuEvent(QContextMenuEvent *event)
 void ShowWid::wheelEvent(QWheelEvent *e)
 {
     int numDegrees = e->delta();
+
     if (numDegrees > 0)
     {
-        zoomout();
+        if (m_fScale <= 100)
+        {
+            m_fScale *= 1.2;
+        }
     }
-    if (numDegrees < 0)
+    else if (numDegrees < 0)
     {
-        zoomin();
+        if (m_fScale >= 0.01)
+        {
+            m_fScale *= 1 / 1.2;
+        }
     }
+
     update();
 }
 
@@ -118,24 +127,6 @@ void ShowWid::mousePressEvent(QMouseEvent * e)
 void ShowWid::mouseDoubleClickEvent(QMouseEvent *e)
 {
 
-}
-
-void ShowWid::zoomout()
-{
-    if (m_fScale <= 100)
-    {
-        m_fScale *= 1.2;
-    }
-    update();
-}
-
-void ShowWid::zoomin()
-{
-    if (m_fScale >= 0.01)
-    {
-        m_fScale *= 1 / 1.2;
-    }
-    update();
 }
 
 // void ShowWid::OpenImage(QImage& stImage)

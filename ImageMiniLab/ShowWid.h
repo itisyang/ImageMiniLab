@@ -46,9 +46,6 @@ private:
     void mousePressEvent(QMouseEvent * e);//鼠标点击
     void mouseDoubleClickEvent(QMouseEvent *e);//鼠标双击
 
-    void zoomout();
-    void zoomin();
-
 private:
 
     QString m_strImagePath;     //图片路径
