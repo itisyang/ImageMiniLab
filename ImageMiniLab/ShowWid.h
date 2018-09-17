@@ -5,7 +5,7 @@
 #include <QAction>
 #include <QMenu>
 #include <QContextMenuEvent>
-
+#include <QImage>
 
 #define STEP_GRAYSCALE      1   //灰度化
 #define STEP_UNGRAYSCALE    2   //去灰度化
@@ -23,6 +23,9 @@ public:
     ShowWid(QWidget *parent = Q_NULLPTR);
     ~ShowWid();
 
+    //void OpenImage(QImage& stImage);//打开图片
+    void OpenImage(QString strImagePath);//打开图片
+
 private slots:
     void on_actSharpen_triggered();             //锐化
     void on_actDenoise_triggered();             //去噪
@@ -30,6 +33,7 @@ private slots:
     void On_menuRotate_triggered(QAction *act); //旋转
 
     //void on_actRotate(QAction *act);
+
 
     void On_SetBasePix(QPixmap pix);            //原图
     void On_Undo();                             //撤销
@@ -42,6 +46,11 @@ private:
     void mouseMoveEvent(QMouseEvent * e);//鼠标移动
     void mousePressEvent(QMouseEvent * e);//鼠标点击
     void mouseDoubleClickEvent(QMouseEvent *e);//鼠标双击
+
+    void zoomout();
+    void zoomin();
+
+
 private:
     QPixmap m_pixBase;          //原始图像
     QPixmap m_pixShow;          //效果显示图像
@@ -61,6 +70,11 @@ private:
     QAction m_actRotateLeft;    //向左旋转
 
     QList<int> m_listStepHistory;      //历史操作步骤
+
+
+    float m_fScale;   //缩放比例
+    int xtranslate;     //坐标
+    int ytranslate;
 
 };
 

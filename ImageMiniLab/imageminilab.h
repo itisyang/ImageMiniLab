@@ -18,6 +18,7 @@ private slots:
 signals:
     void Sig_BasePix(QPixmap pix);
     void Sig_Undo();
+    void SigOpenImage(QString strImagePath);
 private:
     Ui::ImageMiniLabClass ui;
 

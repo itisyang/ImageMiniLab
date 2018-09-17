@@ -8,7 +8,7 @@
 
 #pragma execution_character_set("utf-8")
 
-ShowWid::ShowWid(QWidget *parent)
+ShowWid::ShowWid(QWidget *parent): m_fScale(1), xtranslate(0), ytranslate(0)
 {
     m_nRotateDegrees = 0;//初始旋转角度
     m_bGrayscale = false;
@@ -45,29 +45,14 @@ ShowWid::~ShowWid()
 //绘制事件
 void ShowWid::paintEvent(QPaintEvent *event)
 {
-    QPainter painter;
+    QPainter painter(this);
+    painter.setBrush(QBrush(QColor(121, 121, 121)));
+    painter.drawRect(0, 0, this->width(), this->height());
 
-    if (m_pixBase.width() && m_pixBase.height())
+    if (m_stImage.width() && m_stImage.height())
     {
-        QPixmap pix;
-        //旋转处理
-        if (m_nRotateDegrees)
-        {
-            QMatrix matrix;
-            matrix.rotate(m_nRotateDegrees);
-            pix = m_pixShow.transformed(matrix, Qt::SmoothTransformation);
-        }
-        else
-        {
-            pix = m_pixShow;
-        }
-
-        //按窗口大小缩放
-        pix = pix.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        painter.begin(this);
-        painter.drawPixmap(0, 0, pix.width(), pix.height(), pix);
+        painter.drawImage(QPoint(xtranslate, ytranslate), m_stImage.scaled(this->width() * m_fScale, this->height() * m_fScale, Qt::KeepAspectRatio));
     }
-    
 }
 
 
@@ -91,7 +76,16 @@ void ShowWid::contextMenuEvent(QContextMenuEvent *event)
 
 void ShowWid::wheelEvent(QWheelEvent *e)
 {
-
+    int numDegrees = e->delta();
+    if (numDegrees > 0)
+    {
+        zoomout();
+    }
+    if (numDegrees < 0)
+    {
+        zoomin();
+    }
+    update();
 }
 
 void ShowWid::mouseMoveEvent(QMouseEvent * e)
@@ -107,6 +101,39 @@ void ShowWid::mousePressEvent(QMouseEvent * e)
 void ShowWid::mouseDoubleClickEvent(QMouseEvent *e)
 {
 
+}
+
+void ShowWid::zoomout()
+{
+    if (m_fScale <= 100)
+    {
+        m_fScale *= 1.2;
+    }
+    update();
+}
+
+void ShowWid::zoomin()
+{
+    if (m_fScale >= 0.01)
+    {
+        m_fScale *= 1 / 1.2;
+    }
+    update();
+}
+
+// void ShowWid::OpenImage(QImage& stImage)
+// {
+//     m_stImage = stImage;
+// }
+
+void ShowWid::OpenImage(QString strImagePath)
+{
+    bool ret = m_stImage.load(strImagePath);
+    if (!ret)
+    {
+        qDebug() << "打开图片失败";
+    }
+    update();
 }
 
 //原图

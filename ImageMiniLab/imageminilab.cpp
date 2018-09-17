@@ -13,21 +13,30 @@ ImageMiniLab::ImageMiniLab(QWidget *parent)
 {
     ui.setupUi(this);
 
-    connect(this, SIGNAL(Sig_BasePix(QPixmap)), ui.ShowWidget, SLOT(On_SetBasePix(QPixmap)));
-    connect(this, SIGNAL(Sig_Undo()), ui.ShowWidget, SLOT(On_Undo()));
+    QList<bool> listRet;
+    listRet << connect(this, SIGNAL(Sig_BasePix(QPixmap)), ui.ShowWidget, SLOT(On_SetBasePix(QPixmap)));
+    listRet << connect(this, SIGNAL(Sig_Undo()), ui.ShowWidget, SLOT(On_Undo()));
+
+    listRet << connect(this, &ImageMiniLab::SigOpenImage, ui.ShowWidget, &ShowWid::OpenImage);
+
+    for (bool ret : listRet)
+    {
+        if (!ret)
+        {
+            qDebug() << "初始化失败";
+        }
+    }
 }
 
 void ImageMiniLab::on_ActOpen_triggered()
 {
     qDebug() << "on_actionopen_triggered";
     m_ImagePath = QFileDialog::getOpenFileName(this, tr("Open File"),
-        "/",
+        ".",
         tr("Images (*.png *.xpm *.jpg)"));
     if (!m_ImagePath.isEmpty())
     {
-        m_Pix.load(m_ImagePath);
-        emit Sig_BasePix(m_Pix);
-        //ui.LabShow->setPixmap(m_Pix);
+        emit SigOpenImage(m_ImagePath);
     }
 }
 
