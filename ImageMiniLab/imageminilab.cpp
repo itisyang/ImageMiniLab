@@ -26,7 +26,8 @@ bool ImageMiniLab::Init()
     QList<bool> listRet;
 
     listRet << connect(this, &ImageMiniLab::SigOpenImage, ui.ShowWidget, &ShowWid::OpenImage);
-
+    listRet << connect(ui.ShowWidget, &ShowWid::SigMessage, this, &ImageMiniLab::OnMessage);
+    
     for (bool ret : listRet)
     {
         if (!ret)
@@ -80,4 +81,9 @@ void ImageMiniLab::on_ActSaveAs_triggered()
 void ImageMiniLab::on_ActUndo_triggered()
 {
     emit SigUndo();
+}
+
+void ImageMiniLab::OnMessage(QString strMessage)
+{
+    ui.StatusBar->showMessage(strMessage);
 }

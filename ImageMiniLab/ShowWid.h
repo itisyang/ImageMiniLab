@@ -28,6 +28,8 @@ public:
     //void OpenImage(QImage& stImage);//打开图片
     void OpenImage(QString strImagePath);//打开图片
 
+signals:
+    void SigMessage(QString strMessage);
 private slots:
     void on_actSharpen_triggered();             //锐化
     void on_actDenoise_triggered();             //去噪
@@ -46,7 +48,6 @@ private:
 
     void zoomout();
     void zoomin();
-
 
 private:
     QPixmap m_pixBase;          //原始图像

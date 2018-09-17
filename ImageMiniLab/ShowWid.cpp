@@ -30,7 +30,6 @@ ShowWid::ShowWid(QWidget *parent): m_fScale(1), xtranslate(0), ytranslate(0)
     listMenuMouse << &m_actSharpen << &m_actDenoise << &m_actGrayscale << &m_actRotateMenu;
     m_menuMouse.addActions(listMenuMouse);
 
-
 }
 
 ShowWid::~ShowWid()
@@ -150,6 +149,12 @@ void ShowWid::OpenImage(QString strImagePath)
     if (!ret)
     {
         qDebug() << "打开图片失败";
+        emit SigMessage("打开图片失败");
+    }
+    else
+    {
+        qDebug() << "打开图片成功";
+        emit SigMessage("打开图片成功");
     }
     update();
 }
