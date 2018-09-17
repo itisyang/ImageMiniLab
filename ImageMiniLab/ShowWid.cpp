@@ -154,16 +154,6 @@ void ShowWid::OpenImage(QString strImagePath)
     update();
 }
 
-//撤销
-void ShowWid::On_Undo()
-{
-    qDebug() << "On_Undo";
-    if (m_listStepHistory.isEmpty())
-    {
-        return;
-    }
-    m_listStepHistory.pop_back();
-}
 
 //锐化
 void ShowWid::on_actSharpen_triggered()

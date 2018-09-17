@@ -34,7 +34,6 @@ private slots:
     void on_actGrayscale_triggered();           //灰度化
     void On_menuRotate_triggered(QAction *act); //旋转
 
-    void On_Undo();                             //撤销
 private:
     void paintEvent(QPaintEvent *event);                //绘制事件
 
