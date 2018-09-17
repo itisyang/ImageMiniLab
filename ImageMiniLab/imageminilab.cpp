@@ -12,10 +12,18 @@ ImageMiniLab::ImageMiniLab(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
+}
+
+bool ImageMiniLab::Init()
+{
+    if (!ui.ShowWidget->Init())
+    {
+        qDebug() << "显示界面初始化失败";
+        return false;
+    }
+
 
     QList<bool> listRet;
-    listRet << connect(this, SIGNAL(Sig_BasePix(QPixmap)), ui.ShowWidget, SLOT(On_SetBasePix(QPixmap)));
-    listRet << connect(this, SIGNAL(Sig_Undo()), ui.ShowWidget, SLOT(On_Undo()));
 
     listRet << connect(this, &ImageMiniLab::SigOpenImage, ui.ShowWidget, &ShowWid::OpenImage);
 
@@ -23,9 +31,12 @@ ImageMiniLab::ImageMiniLab(QWidget *parent)
     {
         if (!ret)
         {
-            qDebug() << "初始化失败";
+            qDebug() << "主界面信号槽初始化失败";
+            return false;
         }
     }
+
+    return true;
 }
 
 void ImageMiniLab::on_ActOpen_triggered()

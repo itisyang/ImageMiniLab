@@ -30,10 +30,7 @@ ShowWid::ShowWid(QWidget *parent): m_fScale(1), xtranslate(0), ytranslate(0)
     listMenuMouse << &m_actSharpen << &m_actDenoise << &m_actGrayscale << &m_actRotateMenu;
     m_menuMouse.addActions(listMenuMouse);
 
-    connect(&m_actSharpen, &QAction::triggered, this, &ShowWid::on_actSharpen_triggered);
-    connect(&m_actDenoise, &QAction::triggered, this, &ShowWid::on_actDenoise_triggered);
-    connect(&m_actGrayscale, &QAction::triggered, this, &ShowWid::on_actGrayscale_triggered);
-    connect(&m_menuRotate, &QMenu::triggered, this, &ShowWid::On_menuRotate_triggered);
+
 }
 
 ShowWid::~ShowWid()
@@ -41,6 +38,27 @@ ShowWid::~ShowWid()
 
 }
 
+
+bool ShowWid::Init()
+{
+    QList<bool> listRet;
+
+    listRet << connect(&m_actSharpen, &QAction::triggered, this, &ShowWid::on_actSharpen_triggered);
+    listRet << connect(&m_actDenoise, &QAction::triggered, this, &ShowWid::on_actDenoise_triggered);
+    listRet << connect(&m_actGrayscale, &QAction::triggered, this, &ShowWid::on_actGrayscale_triggered);
+    listRet << connect(&m_menuRotate, &QMenu::triggered, this, &ShowWid::On_menuRotate_triggered);
+
+    for (bool ret : listRet)
+    {
+        if (!ret)
+        {
+            qDebug() << "显示界面信号槽初始化失败";
+            return false;
+        }
+    }
+
+    return true;
+}
 
 //绘制事件
 void ShowWid::paintEvent(QPaintEvent *event)
@@ -134,13 +152,6 @@ void ShowWid::OpenImage(QString strImagePath)
         qDebug() << "打开图片失败";
     }
     update();
-}
-
-//原图
-void ShowWid::On_SetBasePix(QPixmap pix)
-{
-    m_pixBase = pix;
-    m_pixShow = m_pixBase;
 }
 
 //撤销

@@ -23,6 +23,8 @@ public:
     ShowWid(QWidget *parent = Q_NULLPTR);
     ~ShowWid();
 
+    bool Init();
+
     //void OpenImage(QImage& stImage);//打开图片
     void OpenImage(QString strImagePath);//打开图片
 
@@ -32,10 +34,6 @@ private slots:
     void on_actGrayscale_triggered();           //灰度化
     void On_menuRotate_triggered(QAction *act); //旋转
 
-    //void on_actRotate(QAction *act);
-
-
-    void On_SetBasePix(QPixmap pix);            //原图
     void On_Undo();                             //撤销
 private:
     void paintEvent(QPaintEvent *event);                //绘制事件

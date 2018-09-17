@@ -9,6 +9,9 @@ class ImageMiniLab : public QMainWindow
 
 public:
     ImageMiniLab(QWidget *parent = Q_NULLPTR);
+
+    bool Init();
+
 private slots:
     void on_ActOpen_triggered();
     void on_ActClose_triggered();
