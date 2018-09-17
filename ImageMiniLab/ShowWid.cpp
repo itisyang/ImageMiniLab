@@ -153,12 +153,21 @@ void ShowWid::OpenImage(QString strImagePath)
     }
     else
     {
+        m_strImagePath = strImagePath;
         qDebug() << "打开图片成功";
         emit SigMessage("打开图片成功");
     }
     update();
 }
 
+
+void ShowWid::CloseImage()
+{
+    m_strImagePath.clear();
+    m_stImage = QImage();
+
+    update();
+}
 
 //锐化
 void ShowWid::on_actSharpen_triggered()

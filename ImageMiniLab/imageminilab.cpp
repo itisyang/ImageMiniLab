@@ -26,6 +26,7 @@ bool ImageMiniLab::Init()
     QList<bool> listRet;
 
     listRet << connect(this, &ImageMiniLab::SigOpenImage, ui.ShowWidget, &ShowWid::OpenImage);
+    listRet << connect(this, &ImageMiniLab::SigCloseImage, ui.ShowWidget, &ShowWid::CloseImage);
     listRet << connect(ui.ShowWidget, &ShowWid::SigMessage, this, &ImageMiniLab::OnMessage);
     
     for (bool ret : listRet)
@@ -42,10 +43,10 @@ bool ImageMiniLab::Init()
 
 void ImageMiniLab::on_ActOpen_triggered()
 {
-    qDebug() << "on_actionopen_triggered";
     m_ImagePath = QFileDialog::getOpenFileName(this, tr("Open File"),
         ".",
-        tr("Images (*.png *.xpm *.jpg)"));
+        tr("Images (*.png *.bmp *.jpg)"));
+
     if (!m_ImagePath.isEmpty())
     {
         emit SigOpenImage(m_ImagePath);
@@ -54,8 +55,7 @@ void ImageMiniLab::on_ActOpen_triggered()
 
 void ImageMiniLab::on_ActClose_triggered()
 {
-    qDebug() << "on_actionclose_triggered";
-    m_ImagePath.clear();
+    emit SigCloseImage();
 }
 
 void ImageMiniLab::on_ActSave_triggered()

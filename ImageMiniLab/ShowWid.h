@@ -27,7 +27,7 @@ public:
 
     //void OpenImage(QImage& stImage);//打开图片
     void OpenImage(QString strImagePath);//打开图片
-
+    void CloseImage();//关闭图片
 signals:
     void SigMessage(QString strMessage);
 private slots:
@@ -50,6 +50,9 @@ private:
     void zoomin();
 
 private:
+
+    QString m_strImagePath;     //图片路径
+
     QPixmap m_pixBase;          //原始图像
     QPixmap m_pixShow;          //效果显示图像
 
