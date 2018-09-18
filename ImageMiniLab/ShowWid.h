@@ -6,6 +6,7 @@
 #include <QMenu>
 #include <QContextMenuEvent>
 #include <QImage>
+#include <QPoint>
 
 #define STEP_GRAYSCALE      1   //灰度化
 #define STEP_UNGRAYSCALE    2   //去灰度化
@@ -14,6 +15,7 @@
 #define STEP_ROTATE_RIGHT   5   //向右旋转
 #define STEP_ROTATE_LEFT    6   //向左旋转
 
+enum MousePressStatus { Left, Mid, Right, No };
 
 class ShowWid : public QWidget
 {
@@ -73,7 +75,14 @@ private:
     float m_fScale;   //缩放比例
     int xtranslate;     //坐标
     int ytranslate;
+     
 
+
+
+    MousePressStatus m_eMousePressStatus;
+    QPoint m_stMousePressPos;
+    QPoint m_stImageShowPos;
+    QPoint m_stImageBeforeMovePos;
 };
 
 #endif // SHOWWID_H

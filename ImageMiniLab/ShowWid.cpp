@@ -8,7 +8,10 @@
 
 #pragma execution_character_set("utf-8")
 
-ShowWid::ShowWid(QWidget *parent): m_fScale(1), xtranslate(0), ytranslate(0)
+
+
+
+ShowWid::ShowWid(QWidget *parent): m_fScale(1), xtranslate(0), ytranslate(0), m_eMousePressStatus(No)
 {
 
     m_nRotateDegrees = 0;//初始旋转角度
@@ -69,7 +72,7 @@ void ShowWid::paintEvent(QPaintEvent *event)
 
     if (m_stImage.width() && m_stImage.height())
     {
-        painter.drawImage(QPoint(xtranslate, ytranslate), m_stImage.scaled(this->width() * m_fScale, this->height() * m_fScale, Qt::KeepAspectRatio));
+        painter.drawImage(m_stImageShowPos, m_stImage.scaled(this->width() * m_fScale, this->height() * m_fScale, Qt::KeepAspectRatio));
     }
 }
 
@@ -116,12 +119,38 @@ void ShowWid::wheelEvent(QWheelEvent *e)
 
 void ShowWid::mouseMoveEvent(QMouseEvent * e)
 {
+    if (m_eMousePressStatus == Left)
+    {
+        m_stImageShowPos.setX(m_stImageBeforeMovePos.x() + (e->x() - m_stMousePressPos.x()));
+        m_stImageShowPos.setY(m_stImageBeforeMovePos.y() + (e->y() - m_stMousePressPos.y()));
 
+        update();
+    }
 }
 
 void ShowWid::mousePressEvent(QMouseEvent * e)
 {
+    switch (e->button())
+    {
+    case Qt::LeftButton:
+        m_eMousePressStatus = Left;
+        m_stMousePressPos.setX(e->x());
+        m_stMousePressPos.setY(e->y());
+        m_stImageBeforeMovePos = m_stImageShowPos;
 
+        break;
+    case Qt::RightButton:
+        m_eMousePressStatus = Right;
+        break;
+    case Qt::MiddleButton:
+        m_eMousePressStatus = Mid;
+        break;
+    default:
+        m_eMousePressStatus = No;
+    }
+
+    m_stMousePressPos.setX(e->x());
+    m_stMousePressPos.setY(e->y());
 }
 
 void ShowWid::mouseDoubleClickEvent(QMouseEvent *e)
