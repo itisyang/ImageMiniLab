@@ -8,7 +8,7 @@
 
 :white_check_mark: 旋转
 
-:white_large_square: 镜像
+:white_check_mark: 镜像
 
 :white_check_mark: 灰度化
 

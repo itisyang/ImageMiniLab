@@ -21,23 +21,6 @@ ShowWid::ShowWid(QWidget *parent): m_fScale(1), xtranslate(0), ytranslate(0), m_
     m_bMirroredHorizontal = false;
     m_bMirroredVertical = false;
 
-    m_actSharpen.setText("锐化");
-    m_actDenoise.setText("去噪");
-    m_actGrayscale.setText("灰度化");
-    m_actGrayscale.setCheckable(true);
-    m_actRotateMenu.setText("旋转");
-    m_actRotateMenu.setMenu(&m_menuRotate);
-    m_actRotateLeft.setText("向左旋转");
-    m_actRotateRight.setText("向右旋转");
-
-    QList<QAction *> listMenuRotate;
-    listMenuRotate << &m_actRotateLeft << &m_actRotateRight;
-    m_menuRotate.addActions(listMenuRotate);
-
-    QList<QAction *> listMenuMouse;
-    listMenuMouse << &m_actSharpen << &m_actDenoise << &m_actGrayscale << &m_actRotateMenu;
-    m_menuMouse.addActions(listMenuMouse);
-
 }
 
 ShowWid::~ShowWid()
@@ -48,12 +31,41 @@ ShowWid::~ShowWid()
 
 bool ShowWid::Init()
 {
+    m_actSharpen.setText("锐化");
+    m_actDenoise.setText("去噪");
+    m_actGrayscale.setText("灰度化");
+    m_actGrayscale.setCheckable(true);
+
+    m_actRotateMenu.setText("旋转");
+    m_actRotateMenu.setMenu(&m_menuRotate);
+    m_actRotateLeft.setText("向左旋转");
+    m_actRotateRight.setText("向右旋转");
+    m_menuRotate.addAction(&m_actRotateLeft);
+    m_menuRotate.addAction(&m_actRotateRight);
+
+    m_actMirroredMenu.setText("镜像");
+    m_actMirroredMenu.setMenu(&m_menuMirrored);
+    m_actMirroredHorizontal.setText("水平镜像");
+    m_actMirroredVertical.setText("垂直镜像");
+    m_actMirroredHorizontal.setCheckable(true);
+    m_actMirroredVertical.setCheckable(true);
+    m_menuMirrored.addAction(&m_actMirroredHorizontal);
+    m_menuMirrored.addAction(&m_actMirroredVertical);
+
+
+    QList<QAction *> listMenuMouse;
+    listMenuMouse << &m_actSharpen << &m_actDenoise << &m_actGrayscale << &m_actRotateMenu << &m_actMirroredMenu;
+    m_menuMouse.addActions(listMenuMouse);
+
+
     QList<bool> listRet;
 
     listRet << connect(&m_actSharpen, &QAction::triggered, this, &ShowWid::on_actSharpen_triggered);
     listRet << connect(&m_actDenoise, &QAction::triggered, this, &ShowWid::on_actDenoise_triggered);
     listRet << connect(&m_actGrayscale, &QAction::triggered, this, &ShowWid::on_actGrayscale_triggered);
     listRet << connect(&m_menuRotate, &QMenu::triggered, this, &ShowWid::On_menuRotate_triggered);
+    listRet << connect(&m_menuMirrored, &QMenu::triggered, this, &ShowWid::On_menuMirrored_triggered);
+
 
     for (bool ret : listRet)
     {
@@ -100,9 +112,8 @@ void ShowWid::paintEvent(QPaintEvent *event)
             delete newImage;
         }
 
-
-
-
+        //镜像
+        stImageTemp = stImageTemp.mirrored(m_bMirroredHorizontal, m_bMirroredVertical);
 
         //旋转
         QMatrix matrix;
@@ -267,6 +278,20 @@ void ShowWid::On_menuRotate_triggered(QAction *act)
             m_nRotateDegrees = 0;
         }
         m_listStepHistory.push_back(STEP_ROTATE_LEFT);
+    }
+
+    update();
+}
+
+void ShowWid::On_menuMirrored_triggered(QAction *act)
+{
+    if (act == &m_actMirroredHorizontal)
+    {
+        m_bMirroredHorizontal = !m_bMirroredHorizontal;
+    }
+    else if (act == &m_actMirroredVertical)
+    {
+        m_bMirroredVertical = !m_bMirroredVertical;
     }
 
     update();
