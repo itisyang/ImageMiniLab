@@ -72,7 +72,11 @@ void ShowWid::paintEvent(QPaintEvent *event)
 
     if (m_stImage.width() && m_stImage.height())
     {
-        painter.drawImage(m_stImageShowPos, m_stImage.scaled(this->width() * m_fScale, this->height() * m_fScale, Qt::KeepAspectRatio));
+        //旋转
+        QMatrix matrix;
+        matrix.rotate(m_nRotateDegrees);
+        QImage stImageTemp = m_stImage.scaled(this->width() * m_fScale, this->height() * m_fScale, Qt::KeepAspectRatio).transformed(matrix);
+        painter.drawImage(m_stImageShowPos, stImageTemp);
     }
 }
 
