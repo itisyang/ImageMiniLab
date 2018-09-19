@@ -18,9 +18,13 @@ ShowWid::ShowWid(QWidget *parent): m_fScale(1), xtranslate(0), ytranslate(0), m_
     m_bGrayscale = false;
     m_listStepHistory.clear();
 
+    m_bMirroredHorizontal = false;
+    m_bMirroredVertical = false;
+
     m_actSharpen.setText("锐化");
     m_actDenoise.setText("去噪");
     m_actGrayscale.setText("灰度化");
+    m_actGrayscale.setCheckable(true);
     m_actRotateMenu.setText("旋转");
     m_actRotateMenu.setMenu(&m_menuRotate);
     m_actRotateLeft.setText("向左旋转");
@@ -72,10 +76,38 @@ void ShowWid::paintEvent(QPaintEvent *event)
 
     if (m_stImage.width() && m_stImage.height())
     {
+        QImage stImageTemp = m_stImage;
+
+        //灰度化
+        if (m_bGrayscale && !stImageTemp.allGray())
+        {
+            QColor oldColor;
+            QImage * newImage = new QImage(stImageTemp.width(), stImageTemp.height(), QImage::Format_ARGB32);
+
+            for (int x = 0; x < newImage->width(); x++) 
+            {
+                for (int y = 0; y < newImage->height(); y++) 
+                {
+                    //对坐标像素点 红绿蓝 取平均值，三值相等即为灰度图
+                    oldColor = QColor(stImageTemp.pixel(x, y));
+                    int average = (oldColor.red() + oldColor.green() + oldColor.blue()) / 3;
+                    newImage->setPixel(x, y, qRgb(average, average, average));
+                }
+            }
+
+            stImageTemp = *newImage;
+                
+            delete newImage;
+        }
+
+
+
+
+
         //旋转
         QMatrix matrix;
         matrix.rotate(m_nRotateDegrees);
-        QImage stImageTemp = m_stImage.scaled(this->width() * m_fScale, this->height() * m_fScale, Qt::KeepAspectRatio).transformed(matrix);
+        stImageTemp = stImageTemp.scaled(this->width() * m_fScale, this->height() * m_fScale, Qt::KeepAspectRatio).transformed(matrix);
         painter.drawImage(m_stImageShowPos, stImageTemp);
     }
 }
@@ -87,12 +119,12 @@ void ShowWid::contextMenuEvent(QContextMenuEvent *event)
     //鼠标右键菜单出现的位置为当前鼠标的位置
     if (m_bGrayscale)
     {
-        m_actGrayscale.setText("彩色化");
+        m_actGrayscale.setChecked(true);
         m_listStepHistory.push_back(STEP_UNGRAYSCALE);
     }
     else
     {
-        m_actGrayscale.setText("灰度化");
+        m_actGrayscale.setChecked(false);
         m_listStepHistory.push_back(STEP_GRAYSCALE);
     }
     m_menuMouse.exec(QCursor::pos());
@@ -211,39 +243,6 @@ void ShowWid::on_actGrayscale_triggered()
 {
     qDebug() << "on_actGrayscale_triggered";
     m_bGrayscale = !m_bGrayscale;
-
-    if (m_bGrayscale)
-    {
-        QImage img = m_pixShow.toImage();
-        if( img.allGray() )
-        {
-            qDebug() << "allGray";
-        }
-        else
-        {
-            QColor oldColor;
-            QImage * newImage = new QImage(img.width(), img.height(), QImage::Format_ARGB32);
-
-            for(int x = 0; x < newImage->width(); x++){
-                for(int y = 0; y < newImage->height(); y++){
-                    //对坐标像素点 红绿蓝 取平均值，三值相等即为灰度图
-                    oldColor = QColor(img.pixel(x,y));
-                    int average = (oldColor.red()+oldColor.green()+oldColor.blue())/3;
-                    newImage->setPixel(x, y, qRgb(average,average,average));
-                }
-            }
-            m_pixShow = QPixmap::fromImage(*newImage);
-            delete newImage;
-        }
-
-        m_listStepHistory.push_back(STEP_GRAYSCALE);
-
-    }
-    else
-    {
-        m_pixShow = m_pixBase;
-        m_listStepHistory.push_back(STEP_UNGRAYSCALE);
-    }
 
     update();
 }

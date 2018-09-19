@@ -50,16 +50,14 @@ private:
 
 private:
 
-    QString m_strImagePath;     //图片路径
-
     QPixmap m_pixBase;          //原始图像
     QPixmap m_pixShow;          //效果显示图像
 
-    QImage m_stImage;
+    QString m_strImagePath;     //图片路径
+    QImage m_stImage;           //原始图像
 
-    int m_nRotateDegrees;       //旋转角度
-    bool m_bGrayscale;          //灰度标志
 
+    // 菜单功能
     QMenu m_menuMouse;          //鼠标右键菜单
     QAction m_actSharpen;       //锐化
     QAction m_actDenoise;       //去噪
@@ -69,16 +67,21 @@ private:
     QAction m_actRotateRight;   //向右旋转
     QAction m_actRotateLeft;    //向左旋转
 
+
     QList<int> m_listStepHistory;      //历史操作步骤
 
-
-    float m_fScale;   //缩放比例
-    int xtranslate;     //坐标
-    int ytranslate;
+    // 图像状态
+    float m_fScale;     //缩放比例
+    int xtranslate;     //图像坐标
+    int ytranslate;     //图像坐标
      
+    int m_nRotateDegrees;       //旋转角度
+    bool m_bGrayscale;          //灰度标志
 
+    bool m_bMirroredHorizontal; //水平镜像标志
+    bool m_bMirroredVertical;   //垂直镜像标志
 
-
+    //鼠标状态
     MousePressStatus m_eMousePressStatus;
     QPoint m_stMousePressPos;
     QPoint m_stImageShowPos;
