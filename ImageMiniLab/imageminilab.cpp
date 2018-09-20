@@ -28,6 +28,8 @@ bool ImageMiniLab::Init()
     listRet << connect(this, &ImageMiniLab::SigOpenImage, ui.ShowWidget, &ShowWid::OpenImage);
     listRet << connect(this, &ImageMiniLab::SigCloseImage, ui.ShowWidget, &ShowWid::CloseImage);
     listRet << connect(ui.ShowWidget, &ShowWid::SigMessage, this, &ImageMiniLab::OnMessage);
+
+    listRet << connect(this, &ImageMiniLab::SigSaveAs, ui.ShowWidget, &ShowWid::OnSaveAs);
     
     for (bool ret : listRet)
     {
@@ -76,6 +78,8 @@ void ImageMiniLab::on_ActSaveAs_triggered()
 
         return;
     }
+
+    emit SigSaveAs();
 }
 
 void ImageMiniLab::on_ActUndo_triggered()

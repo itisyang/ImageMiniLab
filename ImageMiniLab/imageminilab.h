@@ -16,6 +16,7 @@ signals:
     void SigUndo();
     void SigOpenImage(QString strImagePath);    //打开图片
     void SigCloseImage();                       //关闭图片
+    void SigSaveAs();
 private slots:
     void on_ActOpen_triggered();
     void on_ActClose_triggered();

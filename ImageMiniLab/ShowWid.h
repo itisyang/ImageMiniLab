@@ -29,6 +29,8 @@ public:
 
     void OpenImage(QString strImagePath);   //打开图片
     void CloseImage();                      //关闭图片
+
+    void OnSaveAs();                        //另存为
 signals:
     void SigMessage(QString strMessage);
 private slots:
@@ -46,6 +48,9 @@ private:
     void mouseMoveEvent(QMouseEvent * e);   //鼠标移动
     void mousePressEvent(QMouseEvent * e);  //鼠标点击
     void mouseDoubleClickEvent(QMouseEvent *e);//鼠标双击
+
+    QImage GetShowImage();    //由原始图像变换为显示图像
+
 
 private:
 

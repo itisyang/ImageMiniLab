@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QMetaObject>
 #include <QImage>
+#include <QFileDialog>
+#include <QDir>
 
 #include "ShowWid.h"
 
@@ -88,37 +90,11 @@ void ShowWid::paintEvent(QPaintEvent *event)
 
     if (m_stImage.width() && m_stImage.height())
     {
-        QImage stImageTemp = m_stImage;
+        QImage stImageTemp = GetShowImage();
 
-        //灰度化
-        if (m_bGrayscale && !stImageTemp.allGray())
-        {
-            QColor oldColor;
-            QImage * newImage = new QImage(stImageTemp.width(), stImageTemp.height(), QImage::Format_ARGB32);
-
-            for (int x = 0; x < newImage->width(); x++) 
-            {
-                for (int y = 0; y < newImage->height(); y++) 
-                {
-                    //对坐标像素点 红绿蓝 取平均值，三值相等即为灰度图
-                    oldColor = QColor(stImageTemp.pixel(x, y));
-                    int average = (oldColor.red() + oldColor.green() + oldColor.blue()) / 3;
-                    newImage->setPixel(x, y, qRgb(average, average, average));
-                }
-            }
-
-            stImageTemp = *newImage;
-                
-            delete newImage;
-        }
-
-        //镜像
-        stImageTemp = stImageTemp.mirrored(m_bMirroredHorizontal, m_bMirroredVertical);
-
-        //旋转
-        QMatrix matrix;
-        matrix.rotate(m_nRotateDegrees);
-        stImageTemp = stImageTemp.scaled(this->width() * m_fScale, this->height() * m_fScale, Qt::KeepAspectRatio).transformed(matrix);
+        //缩放
+        stImageTemp = stImageTemp.scaled(this->width() * m_fScale, this->height() * m_fScale, Qt::KeepAspectRatio);
+        //绘制到指定坐标
         painter.drawImage(m_stImageShowPos, stImageTemp);
     }
 }
@@ -203,6 +179,59 @@ void ShowWid::mousePressEvent(QMouseEvent * e)
 void ShowWid::mouseDoubleClickEvent(QMouseEvent *e)
 {
 
+}
+
+//得到显示图像
+QImage ShowWid::GetShowImage()
+{
+    QImage stImageTemp = m_stImage;
+
+    //灰度化
+    if (m_bGrayscale && !stImageTemp.allGray())
+    {
+        QColor oldColor;
+        QImage * newImage = new QImage(stImageTemp.width(), stImageTemp.height(), QImage::Format_ARGB32);
+
+        for (int x = 0; x < newImage->width(); x++)
+        {
+            for (int y = 0; y < newImage->height(); y++)
+            {
+                //对坐标像素点 红绿蓝 取平均值，三值相等即为灰度图
+                oldColor = QColor(stImageTemp.pixel(x, y));
+                int average = (oldColor.red() + oldColor.green() + oldColor.blue()) / 3;
+                newImage->setPixel(x, y, qRgb(average, average, average));
+            }
+        }
+
+        stImageTemp = *newImage;
+
+        delete newImage;
+    }
+
+    //镜像
+    stImageTemp = stImageTemp.mirrored(m_bMirroredHorizontal, m_bMirroredVertical);
+
+    //旋转m_strImagePath
+    QMatrix matrix;
+    matrix.rotate(m_nRotateDegrees);
+    stImageTemp = stImageTemp.transformed(matrix);
+
+    return stImageTemp;
+}
+
+void ShowWid::OnSaveAs()
+{
+    qDebug() << "ShowWid::OnSaveAs";
+
+    QImage stImage = GetShowImage();
+
+    QFileInfo info(m_strImagePath);
+    QString strSavePath = QFileDialog::getSaveFileName(this, "另存为", QDir::homePath() + "/" + info.fileName());
+
+    if (!strSavePath.isEmpty())
+    {
+        stImage.save(strSavePath);
+    }
 }
 
 // void ShowWid::OpenImage(QImage& stImage)
