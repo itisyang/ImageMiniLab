@@ -39,17 +39,18 @@ private slots:
     void on_actGrayscale_triggered();               //灰度化
     void On_menuRotate_triggered(QAction *act);     //旋转
     void On_menuMirrored_triggered(QAction *act);   //镜像
+    void On_actPosRestore_triggered();              //位置还原
 private:
-    void paintEvent(QPaintEvent *event);                //绘制事件
+    void paintEvent(QPaintEvent *event);            //绘制事件
 
     void contextMenuEvent(QContextMenuEvent *event);    //右键菜单
 
-    void wheelEvent(QWheelEvent *e);        //滚轮事件
-    void mouseMoveEvent(QMouseEvent * e);   //鼠标移动
-    void mousePressEvent(QMouseEvent * e);  //鼠标点击
-    void mouseDoubleClickEvent(QMouseEvent *e);//鼠标双击
+    void wheelEvent(QWheelEvent *e);                //滚轮事件
+    void mouseMoveEvent(QMouseEvent * e);           //鼠标移动
+    void mousePressEvent(QMouseEvent * e);          //鼠标点击
+    void mouseDoubleClickEvent(QMouseEvent *e);     //鼠标双击
 
-    QImage GetShowImage();    //由原始图像变换为显示图像
+    QImage GetShowImage();                          //由原始图像变换为显示图像
 
 
 private:
@@ -74,7 +75,7 @@ private:
     QMenu m_menuMirrored;       //镜像
     QAction m_actMirroredHorizontal;    //水平镜像
     QAction m_actMirroredVertical;      //垂直镜像
-
+    QAction m_actPosRestore;    //位置还原
 
     QList<int> m_listStepHistory;       //历史操作步骤
 

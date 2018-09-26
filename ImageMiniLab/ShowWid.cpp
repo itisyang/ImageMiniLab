@@ -13,16 +13,16 @@
 
 
 
-ShowWid::ShowWid(QWidget *parent): m_fScale(1), xtranslate(0), ytranslate(0), m_eMousePressStatus(No)
+ShowWid::ShowWid(QWidget *parent): m_fScale(1), 
+xtranslate(0), 
+ytranslate(0), 
+m_eMousePressStatus(No), 
+m_nRotateDegrees(0), 
+m_bGrayscale(false),
+m_bMirroredHorizontal(false),
+m_bMirroredVertical(false)
 {
-
-    m_nRotateDegrees = 0;//初始旋转角度
-    m_bGrayscale = false;
     m_listStepHistory.clear();
-
-    m_bMirroredHorizontal = false;
-    m_bMirroredVertical = false;
-
 }
 
 ShowWid::~ShowWid()
@@ -54,9 +54,10 @@ bool ShowWid::Init()
     m_menuMirrored.addAction(&m_actMirroredHorizontal);
     m_menuMirrored.addAction(&m_actMirroredVertical);
 
+    m_actPosRestore.setText("位置还原");
 
     QList<QAction *> listMenuMouse;
-    listMenuMouse << &m_actSharpen << &m_actDenoise << &m_actGrayscale << &m_actRotateMenu << &m_actMirroredMenu;
+    listMenuMouse << &m_actSharpen << &m_actDenoise << &m_actGrayscale << &m_actRotateMenu << &m_actMirroredMenu << &m_actPosRestore;
     m_menuMouse.addActions(listMenuMouse);
 
 
@@ -67,7 +68,7 @@ bool ShowWid::Init()
     listRet << connect(&m_actGrayscale, &QAction::triggered, this, &ShowWid::on_actGrayscale_triggered);
     listRet << connect(&m_menuRotate, &QMenu::triggered, this, &ShowWid::On_menuRotate_triggered);
     listRet << connect(&m_menuMirrored, &QMenu::triggered, this, &ShowWid::On_menuMirrored_triggered);
-
+    listRet << connect(&m_actPosRestore, &QAction::triggered, this, &ShowWid::On_actPosRestore_triggered);
 
     for (bool ret : listRet)
     {
@@ -322,6 +323,18 @@ void ShowWid::On_menuMirrored_triggered(QAction *act)
     {
         m_bMirroredVertical = !m_bMirroredVertical;
     }
+
+    update();
+}
+
+void ShowWid::On_actPosRestore_triggered()
+{
+    m_fScale = 1;
+    xtranslate = 0;
+    ytranslate = 0;
+    m_bMirroredHorizontal = false;
+    m_bMirroredVertical = false;
+    m_nRotateDegrees = 0;
 
     update();
 }
