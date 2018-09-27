@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QAction>
 #include <QFile>
+#include <QMessageBox>
 
 #include "imageminilab.h"
 
@@ -85,6 +86,11 @@ void ImageMiniLab::on_ActSaveAs_triggered()
 void ImageMiniLab::on_ActUndo_triggered()
 {
     emit SigUndo();
+}
+
+void ImageMiniLab::on_ActAbout_triggered()
+{
+    QMessageBox::information(this, "关于ImageMiniLab", "图像迷你实验室\n可进行图像实验，图像处理。");
 }
 
 void ImageMiniLab::OnMessage(QString strMessage)

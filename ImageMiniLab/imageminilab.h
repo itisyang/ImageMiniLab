@@ -23,6 +23,7 @@ private slots:
     void on_ActSave_triggered();
     void on_ActSaveAs_triggered();
     void on_ActUndo_triggered();
+    void on_ActAbout_triggered();
 private:
     void OnMessage(QString strMessage);
 private:
