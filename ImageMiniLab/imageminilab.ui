@@ -68,6 +68,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="ActOpen"/>
+   <addaction name="ActClose"/>
   </widget>
   <widget class="QStatusBar" name="StatusBar"/>
   <action name="ActUndo">
@@ -98,6 +100,11 @@
   <action name="ActAbout">
    <property name="text">
     <string>关于</string>
+   </property>
+  </action>
+  <action name="action123">
+   <property name="text">
+    <string>123</string>
    </property>
   </action>
  </widget>
