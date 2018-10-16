@@ -8,19 +8,20 @@
 
 #include "ShowWid.h"
 
-#pragma execution_character_set("utf-8")
+//#pragma execution_character_set("utf-8")
 
 
 
 
-ShowWid::ShowWid(QWidget *parent): m_fScale(1), 
-xtranslate(0), 
-ytranslate(0), 
-m_eMousePressStatus(No), 
-m_nRotateDegrees(0), 
-m_bGrayscale(false),
-m_bMirroredHorizontal(false),
-m_bMirroredVertical(false)
+ShowWid::ShowWid(QWidget *parent)
+    : m_fScale(1),
+      xtranslate(0),
+      ytranslate(0),
+      m_nRotateDegrees(0),
+      m_bGrayscale(false),
+      m_bMirroredHorizontal(false),
+      m_bMirroredVertical(false),
+      m_eMousePressStatus(No)
 {
     m_listStepHistory.clear();
 }
@@ -98,6 +99,7 @@ void ShowWid::paintEvent(QPaintEvent *event)
         //绘制到指定坐标
         painter.drawImage(m_stImageShowPos, stImageTemp);
     }
+
 }
 
 
@@ -179,7 +181,7 @@ void ShowWid::mousePressEvent(QMouseEvent * e)
 
 void ShowWid::mouseDoubleClickEvent(QMouseEvent *e)
 {
-
+    QWidget::mouseDoubleClickEvent(e);
 }
 
 //得到显示图像
