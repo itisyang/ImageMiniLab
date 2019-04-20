@@ -1,83 +1,93 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file '.\ImageMiniLab.ui'
-#
-# Created by: PyQt5 UI code generator 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
-
-from PyQt5 import QtCore, QtGui, QtWidgets
+import cv2 as cv
+import numpy as np
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import Qt
+from ImageMiniLabUI import *
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1117, 527)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-        self.LabCtrlWidget = QtWidgets.QWidget(self.centralwidget)
-        self.LabCtrlWidget.setMaximumSize(QtCore.QSize(350, 16777215))
-        self.LabCtrlWidget.setObjectName("LabCtrlWidget")
-        self.gridLayout_4 = QtWidgets.QGridLayout(self.LabCtrlWidget)
-        self.gridLayout_4.setObjectName("gridLayout_4")
-        self.gridLayout = QtWidgets.QGridLayout()
-        self.gridLayout.setObjectName("gridLayout")
-        self.label_2 = QtWidgets.QLabel(self.LabCtrlWidget)
-        self.label_2.setMinimumSize(QtCore.QSize(80, 0))
-        self.label_2.setMaximumSize(QtCore.QSize(80, 16777215))
-        self.label_2.setObjectName("label_2")
-        self.gridLayout.addWidget(self.label_2, 0, 0, 1, 1)
-        self.comboBox = QtWidgets.QComboBox(self.LabCtrlWidget)
-        self.comboBox.setObjectName("comboBox")
-        self.gridLayout.addWidget(self.comboBox, 0, 1, 1, 1)
-        self.gridLayout_4.addLayout(self.gridLayout, 0, 0, 1, 1)
-        self.gridLayout_3 = QtWidgets.QGridLayout()
-        self.gridLayout_3.setObjectName("gridLayout_3")
-        self.label_3 = QtWidgets.QLabel(self.LabCtrlWidget)
-        self.label_3.setMinimumSize(QtCore.QSize(80, 0))
-        self.label_3.setMaximumSize(QtCore.QSize(80, 16777215))
-        self.label_3.setObjectName("label_3")
-        self.gridLayout_3.addWidget(self.label_3, 0, 0, 1, 1)
-        self.lineEdit = QtWidgets.QLineEdit(self.LabCtrlWidget)
-        self.lineEdit.setObjectName("lineEdit")
-        self.gridLayout_3.addWidget(self.lineEdit, 0, 1, 1, 1)
-        self.pushButton = QtWidgets.QPushButton(self.LabCtrlWidget)
-        self.pushButton.setObjectName("pushButton")
-        self.gridLayout_3.addWidget(self.pushButton, 0, 2, 1, 1)
-        self.gridLayout_4.addLayout(self.gridLayout_3, 1, 0, 1, 1)
-        self.stackedWidget = QtWidgets.QStackedWidget(self.LabCtrlWidget)
-        self.stackedWidget.setObjectName("stackedWidget")
-        self.page = QtWidgets.QWidget()
-        self.page.setObjectName("page")
-        self.stackedWidget.addWidget(self.page)
-        self.page_2 = QtWidgets.QWidget()
-        self.page_2.setObjectName("page_2")
-        self.stackedWidget.addWidget(self.page_2)
-        self.gridLayout_4.addWidget(self.stackedWidget, 2, 0, 1, 1)
-        self.gridLayout_2.addWidget(self.LabCtrlWidget, 0, 0, 1, 1)
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setObjectName("label")
-        self.gridLayout_2.addWidget(self.label, 0, 1, 1, 1)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1117, 26))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
-
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "ImageMiniLab"))
-        self.label_2.setText(_translate("MainWindow", "实验类型："))
-        self.label_3.setText(_translate("MainWindow", "实验图片："))
-        self.pushButton.setText(_translate("MainWindow", "选择"))
-        self.label.setText(_translate("MainWindow", "ImageShowLabel"))
+# 图像信息
+def get_image_info(image):
+    print("图像类型：",type(image))
+    print("图像长x宽x通道数：",image.shape)
+    print("图像长宽通道数相乘所得值：",image.size)
+    print("图像像素值类型：",image.dtype)
+    pixel_data = np.array(image)  # 将图像转换成数组
+    print("像素大小：", pixel_data)
 
 
+class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
+    def __init__(self, parent=None):
+        super(ImageMiniLab, self).__init__(parent)
+        self.setupUi(self)
+
+        self.SrcImgShowLabel.clear()
+        self.DstImgShowLabel.clear()
+
+        self.src_file = ""
+        self.src_pix = QPixmap()  # 未处理像素
+        self.dst_pix = QPixmap()  # 处理后像素
+        self.exp_type = {"选择实验类型":self.no_exp_type, "灰度化":self.to_gray}
+        self.ExpTypeComboBox.addItems(self.exp_type)
+
+    def load_exp_img(self, img_name):
+        self.ExpImgLineEdit.setText(img_name)
+        if self.src_pix.load(img_name) is False:
+            QMessageBox.warning(self, "打开图片失败", "请更换图片")
+            return
+        else:
+            self.src_file = img_name
+            w = self.SrcImgShowLabel.width()
+            h = self.SrcImgShowLabel.height()
+            self.SrcImgShowLabel.setPixmap(self.src_pix.scaled(w, h, Qt.KeepAspectRatio))
+            self.DstImgShowLabel.setPixmap(self.src_pix.scaled(w, h, Qt.KeepAspectRatio))
+
+    # 装饰器，必须注明，不然槽会调用两次
+    @QtCore.pyqtSlot()
+    def on_SelectImgPushButton_clicked(self):
+        # 设置文件扩展名过滤,注意用双分号间隔
+        img_name, file_type = QFileDialog.getOpenFileName(self, "选取实验图片", ".", "All Files (*);;Images (*.png *.jpg *.bmp)")
+        print(img_name)
+        if len(img_name) == 0:
+            return
+        self.load_exp_img(img_name)
+
+    @QtCore.pyqtSlot()
+    def on_LoadTestDataPushButton_clicked(self):
+        # 测试参数
+        self.ExpTypeComboBox.setCurrentIndex(1)
+        test_img = 'C:/Users/itisy/Pictures/timg (1).jpg'
+        self.ExpImgLineEdit.setText(test_img)
+        self.load_exp_img(test_img)
+
+    @QtCore.pyqtSlot()
+    def on_GoExpPushButton_clicked(self):
+        cur_exp_type = self.ExpTypeComboBox.currentText()
+        print("实验类型：", cur_exp_type)
+        if cur_exp_type not in self.exp_type:
+            QMessageBox.warning(self, "实验类型出错", "实验类型不存在，或无实验处理步骤，请联系技术支持。")
+        # print("类型", type(self.exp_type[cur_exp_type]))
+        self.exp_type[cur_exp_type]()
+
+    # 未选择实验类型
+    def no_exp_type(self):
+        QMessageBox.warning(self, "未选择实验类型", "请先选择实验类型。")
+
+    # 灰度化
+    def to_gray(self):
+        src = cv.imread(self.src_file)
+        if src is None:
+            QMessageBox.warning(self, "载入出错", "图片读取失败。\n（可能原因：无图片、无正确权限、不受支持或未知的格式）")
+            return
+        gray = cv.cvtColor(src, cv.COLOR_BGR2GRAY)
+        #print("类型", type(gray))
+        # get_image_info(gray)
+
+        ret, img_buf = cv.imencode(".jpg", gray)
+        # print(ret, img_buf)
+        if ret is True:
+            ret = self.dst_pix.loadFromData(img_buf)
+            if ret is True:
+                w = self.SrcImgShowLabel.width()
+                h = self.SrcImgShowLabel.height()
+                self.DstImgShowLabel.setPixmap(self.dst_pix.scaled(w, h, Qt.KeepAspectRatio))
