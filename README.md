@@ -30,3 +30,7 @@
 
 
 
+## 食用指南
+
+- 项目环境：PyQt5 + Qt Designer + Python 3.7  
+- ui编译：`pyuic5 ImageMiniLab.ui –o ImageMiniLab.py`
