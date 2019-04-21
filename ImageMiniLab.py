@@ -31,7 +31,9 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
         self.dst_pix = QPixmap()  # 处理后像素，显示用
 
         # 实验内容，接口定义，实验入口
-        self.exp_type = {"选择实验类型":self.no_exp_type, "灰度化":self.to_gray}
+        self.exp_type = {"选择实验类型":self.no_exp_type,
+                         "灰度化":self.to_gray,
+                         "反转": self.bitwise_not}
         self.ExpTypeComboBox.addItems(self.exp_type)
 
     # 载入图像（初次）
@@ -81,7 +83,7 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
     def on_LoadTestDataPushButton_clicked(self):
         # 测试参数
         self.ExpTypeComboBox.setCurrentIndex(1)
-        test_img = 'C:/Users/itisy/Pictures/timg (1).jpg'
+        test_img = './lena.jpg'
         self.ExpImgLineEdit.setText(test_img)
         self.load_exp_img(test_img)
 
@@ -98,20 +100,36 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
     def no_exp_type(self):
         QMessageBox.warning(self, "未选择实验类型", "请先选择实验类型。")
 
-    # 灰度化
-    def to_gray(self):
-        src = cv.imread(self.src_file)
+    # cv读取图片
+    def cv_read_img(self, img):
+        src = cv.imread(img)
         if src is None:
             QMessageBox.warning(self, "载入出错", "图片读取失败。\n（可能原因：无图片、无正确权限、不受支持或未知的格式）")
-            return
-        gray = cv.cvtColor(src, cv.COLOR_BGR2GRAY)
-        # print("类型", type(gray))
-        # get_image_info(gray)
+            return None
+        return src
 
-        ret, img_buf = cv.imencode(".jpg", gray)
+    def decode_and_show_dst(self, dst):
+        ret, img_buf = cv.imencode(".jpg", dst)
         # print(ret, img_buf)
         if ret is True:
             ret = self.dst_pix.loadFromData(img_buf)
             if ret is True:
                 self.show_exp_pix()
 
+    # 灰度化
+    def to_gray(self):
+        src = self.cv_read_img(self.src_file)
+        if src is None:
+            return
+        gray = cv.cvtColor(src, cv.COLOR_BGR2GRAY)
+        # print("类型", type(gray))
+        # get_image_info(gray)
+        self.decode_and_show_dst(gray)
+
+    # 反转
+    def bitwise_not(self):
+        src = self.cv_read_img(self.src_file)
+        if src is None:
+            return
+        dst = cv.bitwise_not(src)  # 按位取反，白变黑，黑变白
+        self.decode_and_show_dst(dst)
