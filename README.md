@@ -4,7 +4,7 @@
 ## 食用指南  
 - 项目环境：PyQt5 + Qt Designer + Python 3.7  
 - ui编译：`pyuic5 ImageMiniLabUI.ui –o ImageMiniLabUI.py`  
-- 包：python-opencv、PyQt5、numpy  
+- 包：opencv-python、PyQt5、numpy  
 
 ## todo list  
 :white_check_mark: 灰度化  
