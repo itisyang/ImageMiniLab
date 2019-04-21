@@ -6,16 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1177</width>
-    <height>682</height>
+    <width>1681</width>
+    <height>892</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>ImageMiniLab</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0" alignment="Qt::AlignLeft">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
      <widget class="QWidget" name="LabCtrlWidget" native="true">
       <property name="minimumSize">
        <size>
@@ -128,29 +128,33 @@
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QLabel" name="SrcImgShowLabel">
-      <property name="maximumSize">
-       <size>
-        <width>600</width>
-        <height>800</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>SrcImgShowLabel</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="2">
-     <widget class="QLabel" name="DstImgShowLabel">
-      <property name="maximumSize">
-       <size>
-        <width>600</width>
-        <height>800</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>DstImgShowLabel</string>
-      </property>
+     <widget class="QWidget" name="ImgShowWidget" native="true">
+      <widget class="QLabel" name="SrcImgShowLabel">
+       <property name="geometry">
+        <rect>
+         <x>35</x>
+         <y>11</y>
+         <width>120</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>SrcImgShowLabel</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="DstImgShowLabel">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>100</y>
+         <width>120</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>DstImgShowLabel</string>
+       </property>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -160,7 +164,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1177</width>
+     <width>1681</width>
      <height>26</height>
     </rect>
    </property>

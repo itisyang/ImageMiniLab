@@ -23,13 +23,18 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
 
         self.SrcImgShowLabel.clear()
         self.DstImgShowLabel.clear()
+        # self.SrcImgShowLabel.setScaledContents(True)
+        # self.DstImgShowLabel.setScaledContents(True)
 
-        self.src_file = ""
-        self.src_pix = QPixmap()  # 未处理像素
-        self.dst_pix = QPixmap()  # 处理后像素
+        self.src_file = ""  # 图像原始路径，cv处理用
+        self.src_pix = QPixmap()  # 未处理像素，显示用
+        self.dst_pix = QPixmap()  # 处理后像素，显示用
+
+        # 实验内容，接口定义，实验入口
         self.exp_type = {"选择实验类型":self.no_exp_type, "灰度化":self.to_gray}
         self.ExpTypeComboBox.addItems(self.exp_type)
 
+    # 载入图像（初次）
     def load_exp_img(self, img_name):
         self.ExpImgLineEdit.setText(img_name)
         if self.src_pix.load(img_name) is False:
@@ -37,10 +42,30 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
             return
         else:
             self.src_file = img_name
+            self.dst_pix = self.src_pix.copy(self.src_pix.rect())
+            self.resizeEvent(None)
+            self.show_exp_pix()
+
+    # 显示图像
+    def show_exp_pix(self):
+        if self.src_pix.width() > 0:
             w = self.SrcImgShowLabel.width()
             h = self.SrcImgShowLabel.height()
             self.SrcImgShowLabel.setPixmap(self.src_pix.scaled(w, h, Qt.KeepAspectRatio))
-            self.DstImgShowLabel.setPixmap(self.src_pix.scaled(w, h, Qt.KeepAspectRatio))
+        if self.dst_pix.width() > 0:
+            w = self.DstImgShowLabel.width()
+            h = self.DstImgShowLabel.height()
+            self.DstImgShowLabel.setPixmap(self.dst_pix.scaled(w, h, Qt.KeepAspectRatio))
+
+    # 窗口大小变化，使显示内容适应窗口大小
+    def resizeEvent(self, event):
+        w = self.ImgShowWidget.width()
+        h = self.ImgShowWidget.height()
+        self.SrcImgShowLabel.resize(w/2, h)
+        self.SrcImgShowLabel.move(0, 0)
+        self.DstImgShowLabel.resize(w/2, h)
+        self.DstImgShowLabel.move(w/2, 0)
+        self.show_exp_pix()
 
     # 装饰器，必须注明，不然槽会调用两次
     @QtCore.pyqtSlot()
@@ -80,7 +105,7 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
             QMessageBox.warning(self, "载入出错", "图片读取失败。\n（可能原因：无图片、无正确权限、不受支持或未知的格式）")
             return
         gray = cv.cvtColor(src, cv.COLOR_BGR2GRAY)
-        #print("类型", type(gray))
+        # print("类型", type(gray))
         # get_image_info(gray)
 
         ret, img_buf = cv.imencode(".jpg", gray)
@@ -88,6 +113,5 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
         if ret is True:
             ret = self.dst_pix.loadFromData(img_buf)
             if ret is True:
-                w = self.SrcImgShowLabel.width()
-                h = self.SrcImgShowLabel.height()
-                self.DstImgShowLabel.setPixmap(self.dst_pix.scaled(w, h, Qt.KeepAspectRatio))
+                self.show_exp_pix()
+
