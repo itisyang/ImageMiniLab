@@ -18,3 +18,7 @@
 :white_large_square: 色彩校正（最大颜色值分布平衡方法）  
 :white_large_square: 边缘检测  
 :white_large_square: 区域提取  
+
+![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/灰度化.png)
+![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/反转.png)
+![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/通道分离.png)
