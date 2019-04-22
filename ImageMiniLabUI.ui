@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1681</width>
-    <height>892</height>
+    <width>1333</width>
+    <height>558</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -127,7 +127,7 @@
       </layout>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="0" column="2">
      <widget class="QWidget" name="ImgShowWidget" native="true">
       <widget class="QLabel" name="SrcImgShowLabel">
        <property name="geometry">
@@ -157,6 +157,13 @@
       </widget>
      </widget>
     </item>
+    <item row="0" column="1">
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -164,7 +171,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1681</width>
+     <width>1333</width>
      <height>26</height>
     </rect>
    </property>
