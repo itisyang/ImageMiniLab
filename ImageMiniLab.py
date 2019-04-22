@@ -33,7 +33,8 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
         # 实验内容，接口定义，实验入口
         self.exp_type = {"选择实验类型":self.no_exp_type,
                          "灰度化":self.to_gray,
-                         "反转": self.bitwise_not}
+                         "反转": self.bitwise_not,
+                         "通道分离": self.channels_split}
         self.ExpTypeComboBox.addItems(self.exp_type)
 
     # 载入图像（初次）
@@ -96,6 +97,13 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
         # print("类型", type(self.exp_type[cur_exp_type]))
         self.exp_type[cur_exp_type]()
 
+    @QtCore.pyqtSlot()
+    def on_ExpTypeComboBox_currentTextChanged(self, text):
+        if text == "通道分离":
+            # 显示对应的处理参数界面
+            pass
+
+
     # 未选择实验类型
     def no_exp_type(self):
         QMessageBox.warning(self, "未选择实验类型", "请先选择实验类型。")
@@ -133,3 +141,22 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
             return
         dst = cv.bitwise_not(src)  # 按位取反，白变黑，黑变白
         self.decode_and_show_dst(dst)
+
+    # 通道分离
+    def channels_split(self):
+        src = self.cv_read_img(self.src_file)
+        if src is None:
+            return
+        b, g, r = cv.split(src)
+        merge_image = cv.merge([b, g, r])
+        """创建三维数组，0维为B，1维为G，2维为R"""
+        height, width, channels = src.shape
+        img = np.zeros([height*2, width*2, channels], np.uint8)
+        img[0:height, 0:width] = np.expand_dims(b, axis=2)
+        img[0:height, width:width*2] = np.expand_dims(g, axis=2)
+        img[height:height*2, 0:width] = np.expand_dims(r, axis=2)
+        img[height:height*2, width:width*2] = merge_image
+
+        self.decode_and_show_dst(img)
+
+

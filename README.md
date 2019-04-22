@@ -8,6 +8,8 @@
 
 ## todo list  
 :white_check_mark: 灰度化  
+:white_check_mark: 反转  
+:white_check_mark: 通道分离  
 :white_large_square: 锐化  
 :white_large_square: 模糊  
 :white_large_square: 去噪  
