@@ -11,6 +11,7 @@
 :white_check_mark: 反转  
 :white_check_mark: 通道分离  
 :white_check_mark: 噪声、滤波  
+:white_check_mark: 高斯双边滤波
 :white_large_square: 锐化  
 :white_large_square: 模糊  
 :white_large_square: 去噪  
@@ -24,3 +25,4 @@
 ![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/反转.jpg)  
 ![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/通道分离.jpg)  
 ![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/高斯噪声滤波.jpg)  
+![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/高斯双边滤波.jpg)  
