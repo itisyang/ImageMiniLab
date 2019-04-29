@@ -45,7 +45,8 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
                          "反转": self.bitwise_not,
                          "通道分离": self.channels_split,
                          "噪声、滤波": self.noise_and_blur,
-                         "高斯双边滤波": self.bilateral_filter}
+                         "高斯双边滤波": self.bilateral_filter,
+                         "均值偏移滤波": self.mean_shift_filter}
         self.ExpTypeComboBox.addItems(self.exp_type)
 
     # 载入图像（初次）
@@ -236,4 +237,11 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
         dst = cv.bilateralFilter(src, 0, 100, 15)  # 高斯双边滤波
         self.decode_and_show_dst(dst)
 
+    def mean_shift_filter(self):
+        src = self.cv_read_img(self.src_file)
+        if src is None:
+            return
+
+        dst = cv.pyrMeanShiftFiltering(src, 10, 50)  # 均值偏移滤波
+        self.decode_and_show_dst(dst)
 
