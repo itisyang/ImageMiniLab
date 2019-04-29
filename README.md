@@ -26,3 +26,4 @@
 ![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/通道分离.jpg)  
 ![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/高斯噪声滤波.jpg)  
 ![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/高斯双边滤波.jpg)  
+![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/均值偏移滤波.jpg)  
