@@ -46,7 +46,8 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
                          "通道分离": self.channels_split,
                          "噪声、滤波": self.noise_and_blur,
                          "高斯双边滤波": self.bilateral_filter,
-                         "均值偏移滤波": self.mean_shift_filter}
+                         "均值偏移滤波": self.mean_shift_filter,
+                         "图像二值化": self.threshold}
         self.ExpTypeComboBox.addItems(self.exp_type)
 
     # 载入图像（初次）
@@ -245,3 +246,17 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
         dst = cv.pyrMeanShiftFiltering(src, 10, 50)  # 均值偏移滤波
         self.decode_and_show_dst(dst)
 
+    def threshold(self):
+        src = self.cv_read_img(self.src_file)
+        if src is None:
+            return
+
+        gray = cv.cvtColor(src, cv.COLOR_BGR2GRAY)
+
+        # 这个函数的第一个参数就是原图像，原图像应该是灰度图。
+        # 第二个参数就是用来对像素值进行分类的阈值。
+        # 第三个参数就是当像素值高于（有时是小于）阈值时应该被赋予的新的像素值
+        # 第四个参数来决定阈值方法，见threshold_simple()
+        # ret, binary = cv.threshold(gray, 127, 255, cv.THRESH_BINARY)
+        ret, dst = cv.threshold(gray, 127, 255, cv.THRESH_BINARY | cv.THRESH_OTSU)
+        self.decode_and_show_dst(dst)
