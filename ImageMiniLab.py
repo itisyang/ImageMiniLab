@@ -47,7 +47,8 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
                          "噪声、滤波": self.noise_and_blur,
                          "高斯双边滤波": self.bilateral_filter,
                          "均值偏移滤波": self.mean_shift_filter,
-                         "图像二值化": self.threshold}
+                         "图像二值化": self.threshold,
+                         "Canny边缘检测": self.canny_edge}
         self.ExpTypeComboBox.addItems(self.exp_type)
 
     # 载入图像（初次）
@@ -259,4 +260,19 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
         # 第四个参数来决定阈值方法，见threshold_simple()
         # ret, binary = cv.threshold(gray, 127, 255, cv.THRESH_BINARY)
         ret, dst = cv.threshold(gray, 127, 255, cv.THRESH_BINARY | cv.THRESH_OTSU)
+        self.decode_and_show_dst(dst)
+
+    def canny_edge(self):
+        src = self.cv_read_img(self.src_file)
+        if src is None:
+            return
+
+        blurred = cv.GaussianBlur(src, (3, 3), 0)
+        gray = cv.cvtColor(blurred, cv.COLOR_BGR2GRAY)
+
+        grad_x = cv.Sobel(gray, cv.CV_16SC1, 1, 0)
+        grad_y = cv.Sobel(gray, cv.CV_16SC1, 0, 1)
+
+        dst = cv.Canny(grad_x, grad_y, 30, 150)
+        # dst = cv.Canny(gray, 50, 150)
         self.decode_and_show_dst(dst)
