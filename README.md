@@ -15,11 +15,15 @@
 :white_check_mark: 均值偏移滤波  
 :white_check_mark: 图像二值化  
 :white_check_mark: Canny边缘检测  
-:white_large_square: 色彩分布  
-:white_large_square: 色偏校正（白平衡方法）  
-:white_large_square: 色彩校正（最大颜色值分布平衡方法）  
-:white_large_square: 边缘检测  
-:white_large_square: 区域提取  
+:white_large_square: 直线检测  
+:white_large_square: 圆检测  
+:white_large_square: 轮廓发现  
+:white_large_square: 分水岭分割  
+:white_large_square: 图像开闭操作  
+:white_large_square: 人脸检测  
+:white_large_square: 验证码识别  
+
+
 
 ![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/灰度化.jpg)  
 ![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/反转.jpg)  
