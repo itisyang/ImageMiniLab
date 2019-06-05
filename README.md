@@ -25,11 +25,13 @@
 
 
 
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/灰度化.jpg)  
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/反转.jpg)  
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/通道分离.jpg)  
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/高斯噪声滤波.jpg)  
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/高斯双边滤波.jpg)  
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/均值偏移滤波.jpg)  
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/图像二值化.jpg)  
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/Canny边缘检测.jpg)  
+![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/灰度化.jpg)
+![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/反转.jpg)
+![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/通道分离.jpg)
+![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/高斯噪声滤波.jpg)
+![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/高斯双边滤波.jpg)
+![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/均值偏移滤波.jpg)
+![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/图像二值化.jpg)
+![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/Canny边缘检测.jpg)
+
+
