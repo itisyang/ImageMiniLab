@@ -48,7 +48,10 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
                          "高斯双边滤波": self.bilateral_filter,
                          "均值偏移滤波": self.mean_shift_filter,
                          "图像二值化": self.threshold,
-                         "Canny边缘检测": self.canny_edge}
+                         "Canny边缘检测": self.canny_edge,
+                         "直线检测": self.hough_line,
+                         "圆检测": self.hough_circles,
+                         "轮廓发现": self.find_contours}
         self.ExpTypeComboBox.addItems(self.exp_type)
 
     # 载入图像（初次）
@@ -276,3 +279,16 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
         dst = cv.Canny(grad_x, grad_y, 30, 150)
         # dst = cv.Canny(gray, 50, 150)
         self.decode_and_show_dst(dst)
+
+    # 直线检测
+    def hough_line(self):
+        pass
+
+    # 圆检测
+    def hough_circles(self):
+        pass
+
+    # 轮廓发现
+    def find_contours(self):
+        pass
+
