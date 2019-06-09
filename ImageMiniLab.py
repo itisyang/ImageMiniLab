@@ -312,7 +312,19 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
 
     # 圆检测
     def hough_circles(self):
-        pass
+        src = self.cv_read_img(self.src_file)
+        if src is None:
+            return
+
+        dst = cv.pyrMeanShiftFiltering(src, 10, 100)
+        cimage = cv.cvtColor(dst, cv.COLOR_BGR2GRAY)
+        circles = cv.HoughCircles(cimage, cv.HOUGH_GRADIENT, 1, 20, param1=50, param2=30, minRadius=0, maxRadius=0)
+        circles = np.uint16(np.around(circles))
+        for i in circles[0, :]:
+            cv.circle(src, (i[0], i[1]), i[2], (0, 0, 255), 2)
+            cv.circle(src, (i[0], i[1]), 2, (255, 0, 255), 2)
+
+        self.decode_and_show_dst(src)
 
     # 轮廓发现
     def find_contours(self):
