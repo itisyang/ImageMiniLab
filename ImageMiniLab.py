@@ -328,5 +328,22 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
 
     # 轮廓发现
     def find_contours(self):
-        pass
+        src = self.cv_read_img(self.src_file)
+        if src is None:
+            return
+
+        dst = cv.GaussianBlur(src, (3, 3), 0)
+        gray = cv.cvtColor(dst, cv.COLOR_BGR2GRAY)
+        ret, binary = cv.threshold(gray, 0, 255, cv.THRESH_BINARY | cv.THRESH_OTSU)
+        cloneImage, contous, heriachy = cv.findContours(binary, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+        for i,contou in enumerate(contous):
+            cv.drawContours(src, contous, i, (0, 0, 255), 1)
+
+        # 轮廓
+        self.decode_and_show_dst(src)
+
+        # 轮廓覆盖
+        for i,contou in enumerate(contous):
+            cv.drawContours(src, contous, i, (0, 0, 255), -1)
+        self.decode_and_show_dst(src)
 
