@@ -1,3 +1,13 @@
+'''
+file: ImageMiniLab.py
+date: 2019/04/19 20:00
+author: itisyang@gmail.com
+brief: opencv-python 应用
+note: PyQt5 + Qt Designer + Python 3.7
+'''
+
+
+
 import cv2 as cv
 import numpy as np
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
