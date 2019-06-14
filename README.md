@@ -1,10 +1,20 @@
 # ImageMiniLab  
+
+[![GitHub issues](https://img.shields.io/github/issues/itisyang/ImageMiniLab.svg)](https://github.com/itisyang/ImageMiniLab/issues)
+[![GitHub stars](https://img.shields.io/github/stars/itisyang/ImageMiniLab.svg)](https://github.com/itisyang/ImageMiniLab/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/itisyang/ImageMiniLab.svg)](https://github.com/itisyang/ImageMiniLab/network)
+[![GitHub release](https://img.shields.io/github/release/itisyang/ImageMiniLab.svg)](https://github.com/itisyang/ImageMiniLab/releases)
+![language](https://img.shields.io/badge/language-python-DeepPink.svg)
+[![GitHub license](https://img.shields.io/github/license/itisyang/ImageMiniLab.svg)](https://github.com/itisyang/ImageMiniLab/blob/master/LICENSE)
+
 图像迷你实验室，可进行图像实验，图像处理，图像分析。  
 
 ## 食用指南  
 - 项目环境：PyQt5 + Qt Designer + Python 3.7  
 - ui编译：`pyuic5 ImageMiniLabUI.ui –o ImageMiniLabUI.py`  
 - 包：opencv-python、PyQt5、numpy  
+
+
 
 ## todo list  
 :white_check_mark: 灰度化  
