@@ -7,7 +7,12 @@
 ![language](https://img.shields.io/badge/language-python-DeepPink.svg)
 [![GitHub license](https://img.shields.io/github/license/itisyang/ImageMiniLab.svg)](https://github.com/itisyang/ImageMiniLab/blob/master/LICENSE)
 
+
+![logo](https://raw.githubusercontent.com/itisyang/ImageMiniLab/master/ImageMiniLab.png)  
+
 图像迷你实验室，可进行图像实验，图像处理，图像分析。  
+
+
 
 ## 食用指南  
 - 项目环境：PyQt5 + Qt Designer + Python 3.7  
