@@ -30,12 +30,12 @@
 :white_check_mark: 均值偏移滤波  
 :white_check_mark: 图像二值化  
 :white_check_mark: Canny边缘检测  
-:white_large_square: 直线检测  
-:white_large_square: 圆检测  
-:white_large_square: 轮廓发现  
+:white_check_mark: 直线检测  
+:white_check_mark: 圆检测  
+:white_check_mark: 轮廓发现  
 :white_large_square: 分水岭分割  
 :white_large_square: 图像开闭操作  
-:white_large_square: 人脸检测  
+:white_check_mark: 人脸检测  
 :white_large_square: 验证码识别  
 
 
@@ -48,5 +48,6 @@
 ![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/均值偏移滤波.jpg)
 ![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/图像二值化.jpg)
 ![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/Canny边缘检测.jpg)
+![image](https://github.com/whuchenshuo/ImageMiniLab/blob/master/screenshot.png)
 
 

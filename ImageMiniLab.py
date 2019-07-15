@@ -61,7 +61,8 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
                          "Canny边缘检测": self.canny_edge,
                          "直线检测": self.hough_line,
                          "圆检测": self.hough_circles,
-                         "轮廓发现": self.find_contours}
+                         "轮廓发现": self.find_contours,
+                         "人脸识别": self.face_recognize}
         self.ExpTypeComboBox.addItems(self.exp_type)
 
     # 载入图像（初次）
@@ -356,4 +357,23 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
         for i,contou in enumerate(contous):
             cv.drawContours(src, contous, i, (0, 0, 255), -1)
         self.decode_and_show_dst(src)
+    #人脸识别 正脸 需要下载xml模型 haarcascade_frontalface_alt.xml
+    def face_recognize(self):
+        src = self.cv_read_img(self.src_file)
+        if src is None:
+            return
+
+        gray = cv.cvtColor(src, cv.COLOR_BGR2GRAY)
+        face_cascade = cv.CascadeClassifier('haarcascade_frontalface_alt2.xml')
+        faces = face_cascade.detectMultiScale(
+            gray,
+            scaleFactor=1.15,
+            minNeighbors=3,
+            minSize=(5, 5)
+        )
+
+        for (x, y, w, h) in faces:
+            cv.rectangle(src, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        self.decode_and_show_dst(src)
+
 
