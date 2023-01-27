@@ -8,7 +8,7 @@
 [![GitHub license](https://img.shields.io/github/license/itisyang/ImageMiniLab.svg)](https://github.com/itisyang/ImageMiniLab/blob/master/LICENSE)
 
 
-![logo](https://raw.githubusercontent.com/itisyang/ImageMiniLab/master/ImageMiniLab.png)  
+![logo](https://cdn.staticaly.com/gh/itisyang/MyImages@master/images/ImageMiniLab.png)  
 
 图像迷你实验室，可进行图像实验，图像处理，图像分析。  
 
@@ -40,14 +40,12 @@
 
 
 
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/灰度化.jpg)
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/反转.jpg)
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/通道分离.jpg)
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/高斯噪声滤波.jpg)
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/高斯双边滤波.jpg)
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/均值偏移滤波.jpg)
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/图像二值化.jpg)
-![image](https://raw.githubusercontent.com/itisyang/MyImages/master/ImageMiniLab/Canny边缘检测.jpg)
-![image](https://github.com/whuchenshuo/ImageMiniLab/blob/master/screenshot.png)
-
-
+![灰度化](https://cdn.staticaly.com/gh/itisyang/MyImages@master/images/灰度化.jpg)
+![反转](https://cdn.staticaly.com/gh/itisyang/MyImages@master/images/反转.jpg)
+![通道分离](https://cdn.staticaly.com/gh/itisyang/MyImages@master/images/通道分离.jpg)
+![高斯噪声滤波](https://cdn.staticaly.com/gh/itisyang/MyImages@master/images/高斯噪声滤波.jpg)
+![高斯双边滤波](https://cdn.staticaly.com/gh/itisyang/MyImages@master/images/高斯双边滤波.jpg)
+![均值偏移滤波](https://cdn.staticaly.com/gh/itisyang/MyImages@master/images/均值偏移滤波.jpg)
+![图像二值化](https://cdn.staticaly.com/gh/itisyang/MyImages@master/images/图像二值化.jpg)
+![Canny边缘检测](https://cdn.staticaly.com/gh/itisyang/MyImages@master/images/Canny边缘检测.jpg)
+![人脸识别](https://cdn.staticaly.com/gh/itisyang/MyImages@master/images/人脸识别.jpg)
