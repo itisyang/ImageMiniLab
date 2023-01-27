@@ -15,9 +15,9 @@
 
 
 ## 食用指南  
-- 项目环境：PyQt5 + Qt Designer + Python 3.7  
-- ui编译：`pyuic5 ImageMiniLabUI.ui –o ImageMiniLabUI.py`  
-- 包：opencv-python、PyQt5、numpy  
+- 项目环境：PyQt6 + Qt Designer + Python 3.x  
+- ui编译：`python -m PyQt6.uic.pyuic ImageMiniLabUI.ui -o ImageMiniLabUI.py`  
+- 包：opencv-python、PyQt6、numpy  
 
 
 
