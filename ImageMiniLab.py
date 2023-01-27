@@ -10,9 +10,9 @@ note: PyQt5 + Qt Designer + Python 3.7
 
 import cv2 as cv
 import numpy as np
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt
+from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtCore import Qt
 from ImageMiniLabUI import *
 
 
@@ -82,20 +82,20 @@ class ImageMiniLab(QMainWindow, Ui_ImageMiniLabUI):
         if self.src_pix.width() > 0:
             w = self.SrcImgShowLabel.width()
             h = self.SrcImgShowLabel.height()
-            self.SrcImgShowLabel.setPixmap(self.src_pix.scaled(w, h, Qt.KeepAspectRatio))
+            self.SrcImgShowLabel.setPixmap(self.src_pix.scaled(w, h, Qt.AspectRatioMode.KeepAspectRatio))
         if self.dst_pix.width() > 0:
             w = self.DstImgShowLabel.width()
             h = self.DstImgShowLabel.height()
-            self.DstImgShowLabel.setPixmap(self.dst_pix.scaled(w, h, Qt.KeepAspectRatio))
+            self.DstImgShowLabel.setPixmap(self.dst_pix.scaled(w, h, Qt.AspectRatioMode.KeepAspectRatio))
 
     # 窗口大小变化，使显示内容适应窗口大小
     def resizeEvent(self, event):
         w = self.ImgShowWidget.width()
         h = self.ImgShowWidget.height()
-        self.SrcImgShowLabel.resize(w/2, h)
+        self.SrcImgShowLabel.resize(int(w/2), h)
         self.SrcImgShowLabel.move(0, 0)
-        self.DstImgShowLabel.resize(w/2, h)
-        self.DstImgShowLabel.move(w/2, 0)
+        self.DstImgShowLabel.resize(int(w/2), h)
+        self.DstImgShowLabel.move(int(w/2), 0)
         self.show_exp_pix()
 
     # 装饰器，必须注明，不然槽会调用两次
